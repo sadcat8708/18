@@ -1,0 +1,219 @@
+
+/* =========================================
+   ALEXA 18 — ANIMACIONES
+   ========================================= */
+
+/* Aparición general */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(22px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeDown {
+    from {
+        opacity: 0;
+        transform: translateY(-18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.92);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Elementos decorativos */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-12px);
+    }
+}
+
+@keyframes floatSoft {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    50% {
+        transform: translate(5px, -9px) rotate(4deg);
+    }
+}
+
+@keyframes gentleRotate {
+    0%, 100% {
+        transform: rotate(-5deg);
+    }
+    50% {
+        transform: rotate(5deg);
+    }
+}
+
+@keyframes pulseSoft {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.06);
+    }
+}
+
+/* Portada */
+.home-content {
+    animation: fadeUp 0.9s ease both;
+}
+
+.home-illustration {
+    animation: float 5s ease-in-out infinite;
+}
+
+.flower-decoration {
+    animation: gentleRotate 6s ease-in-out infinite;
+}
+
+.heart-decoration {
+    animation: pulseSoft 3s ease-in-out infinite;
+}
+
+/* Decoraciones del fondo */
+.background-decoration {
+    animation: floatSoft 8s ease-in-out infinite;
+}
+
+.background-decoration:nth-child(even) {
+    animation-delay: 1.5s;
+}
+
+/* Navegación */
+.sidebar {
+    animation: fadeIn 0.4s ease both;
+}
+
+.nav-link {
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.nav-link:hover {
+    transform: translateX(4px);
+}
+
+/* Secciones */
+.scene:not([hidden]) {
+    animation: fadeIn 0.45s ease both;
+}
+
+.scene:not([hidden]) .scene-content {
+    animation: fadeUp 0.65s ease both;
+}
+
+/* Tarjetas */
+.detail-card,
+.cat-card,
+.surprise-card {
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.detail-card:hover,
+.cat-card:hover,
+.surprise-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Botones */
+.primary-button,
+.secondary-button {
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background-color 0.25s ease;
+}
+
+.primary-button:hover,
+.secondary-button:hover {
+    transform: translateY(-2px);
+}
+
+.primary-button:active,
+.secondary-button:active {
+    transform: scale(0.97);
+}
+
+/* Sobre de la carta */
+.letter-envelope {
+    transition: transform 0.4s ease;
+}
+
+.letter-envelope:hover {
+    transform: translateY(-5px) rotate(-1deg);
+}
+
+.letter-paper {
+    transition:
+        opacity 0.5s ease,
+        transform 0.5s ease;
+}
+
+/* Contador */
+.countdown-item {
+    animation: scaleIn 0.6s ease both;
+}
+
+.countdown-item:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.countdown-item:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.countdown-item:nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+/* Mensajes sorpresa */
+.cat-surprise,
+.surprise-message {
+    animation: fadeUp 0.5s ease both;
+}
+
+/* Accesibilidad: reducir movimiento */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}

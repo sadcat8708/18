@@ -1,0 +1,89 @@
+
+/* =========================================
+   ALEXA 18 — CUENTA REGRESIVA
+   ========================================= */
+
+import { BIRTHDAY_DATE, isBirthdayUnlocked } from "./config.js";
+
+let counterInterval = null;
+
+/**
+ * Convierte un número en dos dígitos.
+ */
+function formatNumber(number) {
+    return String(number).padStart(2, "0");
+}
+
+/**
+ * Actualiza un valor del contador.
+ */
+function updateValue(elementId, value) {
+    const element = document.getElementById(elementId);
+
+    if (element) {
+        element.textContent = formatNumber(value);
+    }
+}
+
+/**
+ * Actualiza la cuenta regresiva.
+ */
+export function updateCounter() {
+    const countdown = document.getElementById("countdown");
+
+    if (!countdown) return;
+
+    const difference = BIRTHDAY_DATE.getTime() - Date.now();
+
+    // Si ya llegó el cumpleaños
+    if (isBirthdayUnlocked() || difference <= 0) {
+        updateValue("days", 0);
+        updateValue("hours", 0);
+        updateValue("minutes", 0);
+        updateValue("seconds", 0);
+
+        countdown.dataset.finished = "true";
+
+        stopCounter();
+
+        return;
+    }
+
+    // Convertir milisegundos a tiempo
+    const totalSeconds = Math.floor(difference / 1000);
+
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    updateValue("days", days);
+    updateValue("hours", hours);
+    updateValue("minutes", minutes);
+    updateValue("seconds", seconds);
+
+    countdown.dataset.finished = "false";
+}
+
+/**
+ * Detiene el contador.
+ */
+export function stopCounter() {
+    if (counterInterval !== null) {
+        clearInterval(counterInterval);
+        counterInterval = null;
+    }
+}
+
+/**
+ * Inicia la cuenta regresiva.
+ */
+export function initCounter() {
+    stopCounter();
+
+    updateCounter();
+
+    if (!isBirthdayUnlocked()) {
+        counterInterval = setInterval(updateCounter, 1000);
+    }
+}

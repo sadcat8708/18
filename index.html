@@ -1,0 +1,488 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#F7F0E7">
+    <meta name="description" content="Un pequeño diario digital creado para celebrar los 18 años de Alexa.">
+
+    <title>ALEXA 18 | Un diario especial</title>
+
+    <!-- TIPOGRAFÍAS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Caveat:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- ESTILOS -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+    <!-- DECORACIONES DEL FONDO -->
+    <div class="background-decoration decoration-one" aria-hidden="true"></div>
+    <div class="background-decoration decoration-two" aria-hidden="true"></div>
+
+    <!-- MENÚ LATERAL -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <span class="logo-flower">✿</span>
+                <span>ALEXA <small>18</small></span>
+            </div>
+
+            <button
+                class="sidebar-close"
+                id="sidebar-close"
+                aria-label="Cerrar menú"
+            >
+                ×
+            </button>
+        </div>
+
+        <p class="sidebar-caption">UN DIARIO ESPECIAL</p>
+
+        <nav class="sidebar-navigation" aria-label="Navegación principal">
+
+            <button class="nav-link active" data-go="inicio">
+                <span class="nav-number">01</span>
+                <span class="nav-icon">⌂</span>
+                <span>Inicio</span>
+            </button>
+
+            <button class="nav-link" data-go="historia">
+                <span class="nav-number">02</span>
+                <span class="nav-icon">♡</span>
+                <span>Nuestra historia</span>
+            </button>
+
+            <button class="nav-link" data-go="explora">
+                <span class="nav-number">03</span>
+                <span class="nav-icon">✿</span>
+                <span>Detalles sobre ella</span>
+            </button>
+
+            <button class="nav-link" data-go="gatitos">
+                <span class="nav-number">04</span>
+                <span class="nav-icon">♧</span>
+                <span>Rincón de gatitos</span>
+            </button>
+
+            <button class="nav-link" data-go="carta">
+                <span class="nav-number">05</span>
+                <span class="nav-icon">✉</span>
+                <span>Una carta para ti</span>
+            </button>
+
+            <button class="nav-link" data-go="cumpleanos">
+                <span class="nav-number">06</span>
+                <span class="nav-icon">♡</span>
+                <span>Cumpleaños</span>
+            </button>
+
+        </nav>
+
+        <div class="sidebar-footer">
+            <span>Hecho con cariño</span>
+            <span class="footer-heart">♥</span>
+        </div>
+
+    </aside>
+
+    <!-- FONDO OSCURO PARA EL MENÚ MÓVIL -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+
+        <!-- BOTÓN DEL MENÚ MÓVIL -->
+        <header class="mobile-header">
+            <button id="menu-toggle" aria-label="Abrir menú">
+                ☰
+            </button>
+
+            <span>ALEXA <small>18</small></span>
+        </header>
+
+        <!-- ==================================
+             01. INICIO
+        =================================== -->
+        <section class="scene home-scene" id="inicio">
+
+            <div class="home-decoration flower-decoration">
+                ✿
+            </div>
+
+            <div class="home-decoration star-decoration">
+                ✧
+            </div>
+
+            <div class="home-decoration heart-decoration">
+                ♡
+            </div>
+
+            <div class="scene-content home-content">
+
+                <p class="eyebrow">UN PEQUEÑO DETALLE PARA ALGUIEN ESPECIAL</p>
+
+                <div class="home-illustration">
+                    <div class="illustration-frame">
+                        <span class="illustration-flower">✿</span>
+                        <span class="illustration-cat">♡</span>
+                        <span class="illustration-star">✧</span>
+                    </div>
+                </div>
+
+                <h1 class="home-title">
+                    ALEXA <span>18</span>
+                </h1>
+
+                <p class="home-subtitle">
+                    Un pequeño diario de momentos,
+                    detalles y buenos deseos.
+                </p>
+
+                <p class="handwritten home-handwritten">
+                    Hecho especialmente para ti
+                </p>
+
+                <button class="primary-button" data-go="historia">
+                    Abrir mi diario
+                    <span>→</span>
+                </button>
+
+                <p class="home-footer">
+                    20 · 01 · 2027
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- ==================================
+             02. HISTORIA
+        =================================== -->
+        <section class="scene" id="historia" hidden>
+
+            <div class="scene-content">
+
+                <p class="eyebrow">CAPÍTULO UNO</p>
+
+                <h2>Un poquito de historia</h2>
+
+                <p class="section-description">
+                    Hay personas que llegan a nuestras vidas y terminan
+                    formando parte de recuerdos que vale la pena conservar.
+                </p>
+
+                <div class="journal-container">
+
+                    <div class="journal-page">
+                        <span class="journal-label">UNA PEQUEÑA HISTORIA</span>
+
+                        <h3>Todo comienza con un recuerdo...</h3>
+
+                        <div id="story-container"></div>
+
+                        <span class="handwritten journal-signature">
+                            Con cariño ♡
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="secondary-button" data-go="inicio">
+                        ← Inicio
+                    </button>
+
+                    <button class="primary-button" data-go="explora">
+                        Continuar →
+                    </button>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ==================================
+             03. DETALLES SOBRE ELLA
+        =================================== -->
+        <section class="scene" id="explora" hidden>
+
+            <div class="scene-content">
+
+                <p class="eyebrow">CAPÍTULO DOS</p>
+
+                <h2>Pequeños detalles</h2>
+
+                <p class="section-description">
+                    A veces son las pequeñas cosas las que hacen
+                    que una persona sea inolvidable.
+                </p>
+
+                <div class="cards-grid" id="details-container"></div>
+
+                <div class="navigation-buttons">
+                    <button class="secondary-button" data-go="historia">
+                        ← Anterior
+                    </button>
+
+                    <button class="primary-button" data-go="gatitos">
+                        Continuar →
+                    </button>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ==================================
+             04. GATITOS
+        =================================== -->
+        <section class="scene" id="gatitos" hidden>
+
+            <div class="scene-content">
+
+                <p class="eyebrow">CAPÍTULO TRES</p>
+
+                <h2>Un rincón de gatitos</h2>
+
+                <p class="section-description">
+                    Porque un pequeño rincón de ternura nunca está de más.
+                </p>
+
+                <div class="cards-grid" id="cats-container"></div>
+
+                <div class="cat-surprise" id="cat-surprise">
+
+                    <span class="cat-surprise-icon">♡</span>
+
+                    <h3>Una pequeña sorpresa</h3>
+
+                    <p id="cat-surprise-message">
+                        Aquí hay un mensajito esperando por ti.
+                    </p>
+
+                    <button class="secondary-button" data-surprise>
+                        Descubrir mensaje
+                    </button>
+
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="secondary-button" data-go="explora">
+                        ← Anterior
+                    </button>
+
+                    <button class="primary-button" data-go="carta">
+                        Continuar →
+                    </button>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ==================================
+             05. CARTA
+        =================================== -->
+        <section class="scene" id="carta" hidden>
+
+            <div class="scene-content">
+
+                <p class="eyebrow">CAPÍTULO CUATRO</p>
+
+                <h2>Una carta para ti</h2>
+
+                <p class="section-description">
+                    Hay palabras que merecen tener su propio espacio.
+                </p>
+
+                <div class="letter-container">
+
+                    <div class="letter-envelope" id="letter-envelope">
+
+                        <div class="envelope-decoration">
+                            ♡
+                        </div>
+
+                        <p class="handwritten">
+                            Para Alexa
+                        </p>
+
+                        <button
+                            class="primary-button"
+                            id="open-letter"
+                            type="button"
+                        >
+                            Abrir carta
+                        </button>
+
+                    </div>
+
+                    <article class="letter-paper" id="letter-paper" hidden>
+
+                        <p class="letter-date">
+                            20 de enero de 2027
+                        </p>
+
+                        <h3>Querida Alexa:</h3>
+
+                        <div id="letter-content">
+                            <p>
+                                Aquí irá el mensaje especial que queremos
+                                compartir contigo.
+                            </p>
+                        </div>
+
+                        <p class="handwritten letter-closing">
+                            Con mucho cariño ♡
+                        </p>
+
+                    </article>
+
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="secondary-button" data-go="gatitos">
+                        ← Anterior
+                    </button>
+
+                    <button class="primary-button" data-go="cumpleanos">
+                        Ir al cumpleaños →
+                    </button>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ==================================
+             06. CUMPLEAÑOS
+        =================================== -->
+        <section class="scene" id="cumpleanos" hidden>
+
+            <div class="scene-content birthday-content">
+
+                <p class="eyebrow">UN DÍA MUY ESPECIAL</p>
+
+                <h2>¡Se acerca tu día!</h2>
+
+                <p class="section-description">
+                    La cuenta regresiva para celebrar tus 18 años.
+                </p>
+
+                <!-- CONTADOR -->
+                <div class="countdown" id="countdown">
+
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="days">00</span>
+                        <span class="countdown-label">Días</span>
+                    </div>
+
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="hours">00</span>
+                        <span class="countdown-label">Horas</span>
+                    </div>
+
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="minutes">00</span>
+                        <span class="countdown-label">Minutos</span>
+                    </div>
+
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="seconds">00</span>
+                        <span class="countdown-label">Segundos</span>
+                    </div>
+
+                </div>
+
+                <!-- CUMPLEAÑOS BLOQUEADO -->
+                <div id="birthday-locked">
+
+                    <div class="birthday-lock-icon">🎁</div>
+
+                    <h3>Una sorpresa te espera</h3>
+
+                    <p>
+                        Este pequeño espacio se abrirá
+                        cuando llegue tu cumpleaños.
+                    </p>
+
+                    <p class="handwritten">
+                        20 de enero de 2027 · 00:00
+                    </p>
+
+                </div>
+
+                <!-- CUMPLEAÑOS DESBLOQUEADO -->
+                <div id="birthday-unlocked" hidden>
+
+                    <div class="birthday-decoration">✿ ♡ ✧</div>
+
+                    <p class="eyebrow">HOY ES TU DÍA</p>
+
+                    <h1 id="birthday-title">
+                        ¡Felices 18, Alexa!
+                    </h1>
+
+                    <p id="birthday-subtitle">
+                        Que esta nueva etapa esté llena de momentos bonitos.
+                    </p>
+
+                    <div class="birthday-message" id="birthday-message">
+                        <p>
+                            Hoy comienza una nueva etapa.
+                            Espero que esté llena de alegrías,
+                            aprendizajes y experiencias maravillosas.
+                        </p>
+                    </div>
+
+                    <p
+                        class="handwritten"
+                        id="birthday-closing"
+                    >
+                        ¡Disfruta muchísimo tu día! ♡
+                    </p>
+
+                    <div class="surprises-container"></div>
+
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="secondary-button" data-go="carta">
+                        ← Volver a la carta
+                    </button>
+
+                    <button class="primary-button" data-go="inicio">
+                        Volver al inicio
+                    </button>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- AVISO PARA LECTORES DE PANTALLA -->
+        <div
+            id="navigation-announcement"
+            class="visually-hidden"
+            aria-live="polite"
+        ></div>
+
+    </main>
+
+    <!-- JAVASCRIPT -->
+    <script type="module" src="js/main.js"></script>
+
+</body>
+</html>

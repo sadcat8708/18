@@ -1,0 +1,330 @@
+
+/* =========================================
+   ALEXA 18
+   COMPONENTES VISUALES
+========================================= */
+
+/* TARJETAS GENERALES */
+
+.card {
+    position: relative;
+    min-height: 170px;
+    padding: 25px;
+    overflow: hidden;
+    background: #FFFAF5;
+    border: 1px solid var(--cream-dark);
+    border-radius: var(--radius-medium);
+    box-shadow: var(--shadow-soft);
+    text-align: center;
+    transition:
+        transform var(--transition-fast),
+        border-color var(--transition-fast);
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    border-color: var(--dusty-pink);
+}
+
+.card h3 {
+    margin-bottom: 12px;
+    color: var(--brown-dark);
+}
+
+.card p {
+    color: var(--text-soft);
+    font-size: 13px;
+}
+
+/* TARJETAS DE DETALLES */
+
+.detail-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 190px;
+    padding: 25px;
+    background: linear-gradient(
+        145deg,
+        #FFFCF8,
+        #F9EAE6
+    );
+    border: 1px solid var(--dusty-pink);
+    border-radius: var(--radius-medium);
+}
+
+.detail-icon {
+    display: grid;
+    place-items: center;
+    width: 55px;
+    height: 55px;
+    color: var(--accent-dark);
+    background: var(--soft-pink);
+    border-radius: 50%;
+    font-size: 25px;
+}
+
+.detail-card h3 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.detail-card p {
+    margin: 0;
+}
+
+/* TARJETAS DE GATITOS */
+
+.cat-card {
+    padding: 20px;
+    background: #FFFAF5;
+    border: 1px solid var(--cream-dark);
+    border-radius: var(--radius-medium);
+    box-shadow: var(--shadow-soft);
+    text-align: center;
+}
+
+.cat-card img {
+    display: block;
+    width: 100%;
+    max-width: 230px;
+    height: 180px;
+    margin: 0 auto 18px;
+    object-fit: cover;
+    background: var(--soft-pink);
+    border-radius: 15px;
+}
+
+.cat-card h3 {
+    margin-bottom: 8px;
+}
+
+.cat-card p {
+    color: var(--text-soft);
+    font-size: 13px;
+}
+
+/* SORPRESA DE GATITOS */
+
+.cat-surprise {
+    position: relative;
+    margin: 30px auto;
+    padding: 30px 20px;
+    background: var(--soft-pink);
+    border: 1px solid var(--dusty-pink);
+    border-radius: var(--radius-large);
+}
+
+.cat-surprise-icon {
+    display: block;
+    margin-bottom: 12px;
+    color: var(--accent-dark);
+    font-size: 35px;
+}
+
+.cat-surprise h3 {
+    margin-bottom: 10px;
+}
+
+.cat-surprise p {
+    margin-bottom: 20px;
+    color: var(--text-soft);
+}
+
+/* DIARIO DIGITAL */
+
+.journal-page {
+    position: relative;
+    min-height: 250px;
+    background:
+        linear-gradient(
+            to right,
+            transparent 35px,
+            rgba(201, 155, 145, 0.25) 36px,
+            transparent 37px
+        ),
+        #FFFAF1;
+}
+
+.journal-page::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 20px;
+    width: 1px;
+    background: rgba(201, 155, 145, 0.25);
+    content: "";
+}
+
+#story-container {
+    min-height: 70px;
+    color: var(--text-soft);
+    line-height: 2;
+}
+
+.journal-label {
+    color: var(--brown-light);
+}
+
+/* CARTA Y SOBRE */
+
+.letter-container {
+    position: relative;
+}
+
+.letter-envelope {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    min-height: 250px;
+    padding: 35px 20px;
+    background: var(--soft-pink);
+    border: 1px solid var(--dusty-pink);
+    border-radius: var(--radius-medium);
+}
+
+.envelope-decoration {
+    color: var(--accent-dark);
+    font-size: 55px;
+}
+
+.letter-paper {
+    padding: clamp(25px, 5vw, 45px);
+    background: #FFFCF5;
+    border: 1px solid var(--cream-dark);
+    border-radius: 5px 18px 18px 5px;
+    box-shadow: var(--shadow-medium);
+    text-align: left;
+    line-height: 1.9;
+}
+
+.letter-paper h3 {
+    margin: 20px 0;
+}
+
+.letter-date {
+    color: var(--text-light);
+    font-size: 12px;
+    text-align: right;
+}
+
+#letter-content {
+    color: var(--text-soft);
+    line-height: 2;
+}
+
+.letter-closing {
+    margin-top: 30px;
+    text-align: right;
+}
+
+/* MENSAJES SORPRESA */
+
+.surprises-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.surprise-card {
+    padding: 22px;
+    background: #FFFAF5;
+    border: 1px solid var(--dusty-pink);
+    border-radius: var(--radius-medium);
+    text-align: center;
+}
+
+.surprise-card h3 {
+    margin-bottom: 10px;
+    font-size: 19px;
+}
+
+.surprise-card p {
+    color: var(--text-soft);
+    font-size: 13px;
+}
+
+/* DECORACIONES */
+
+.decoration {
+    color: var(--old-rose);
+    user-select: none;
+}
+
+.heart {
+    color: var(--accent-color);
+}
+
+.sparkle {
+    color: var(--brown-light);
+}
+
+/* MENSAJES DESTACADOS */
+
+.message-box {
+    padding: 22px;
+    margin: 20px auto;
+    background: #FFF6F0;
+    border-left: 3px solid var(--old-rose);
+    border-radius: var(--radius-small);
+    color: var(--text-soft);
+    text-align: left;
+}
+
+/* ELEMENTOS DE CUMPLEAÑOS */
+
+.birthday-decoration {
+    color: var(--old-rose);
+}
+
+.birthday-message {
+    border: 1px solid var(--cream-dark);
+}
+
+/* ESTADOS DE INTERACCIÓN */
+
+.card:focus-within,
+.cat-card:focus-within {
+    border-color: var(--accent-color);
+}
+
+/* ACCESIBILIDAD */
+
+@media (prefers-reduced-motion: reduce) {
+    .card,
+    .primary-button,
+    .secondary-button {
+        transition: none;
+    }
+
+    .card:hover {
+        transform: none;
+    }
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 650px) {
+    .surprises-container {
+        grid-template-columns: 1fr;
+    }
+
+    .cat-card img {
+        height: 160px;
+    }
+
+    .detail-card {
+        min-height: 155px;
+        padding: 20px;
+    }
+
+    .letter-paper {
+        padding: 25px 18px;
+    }
+}

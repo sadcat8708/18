@@ -1,0 +1,79 @@
+
+/* =========================================
+   ALEXA 18
+   IDENTIDAD VISUAL Y VARIABLES
+========================================= */
+
+:root {
+
+    /* PALETA PRINCIPAL */
+
+    --cream: #F7F0E7;
+    --cream-light: #FFFBF6;
+    --cream-dark: #EDE2D5;
+
+    --dusty-pink: #E8C9C1;
+    --soft-pink: #F3DFDA;
+    --old-rose: #C99B91;
+
+    --brown-light: #B18C7D;
+    --brown: #987568;
+    --brown-dark: #634A40;
+
+    --white: #FFFFFF;
+
+    /* COLORES DE TEXTO */
+
+    --text-color: #634A40;
+    --text-soft: #987568;
+    --heading-color: #79594D;
+    --text-light: #B18C7D;
+
+    /* COLORES DE INTERACCIÓN */
+
+    --accent-color: #B98283;
+    --accent-dark: #986B6D;
+    --accent-light: #F3DFDA;
+
+    /* TIPOGRAFÍAS */
+
+    --font-primary: 'DM Sans', sans-serif;
+    --font-heading: 'Playfair Display', Georgia, serif;
+    --font-handwritten: 'Caveat', cursive;
+
+    /* TAMAÑOS */
+
+    --sidebar-width: 265px;
+
+    --radius-small: 10px;
+    --radius-medium: 18px;
+    --radius-large: 26px;
+    --radius-round: 50%;
+
+    /* SOMBRAS */
+
+    --shadow-soft:
+        0 5px 18px rgba(99, 74, 64, 0.07);
+
+    --shadow-medium:
+        0 10px 28px rgba(99, 74, 64, 0.10);
+
+    /* BORDES */
+
+    --border-color: rgba(152, 117, 104, 0.17);
+    --border-soft: 1px solid var(--border-color);
+
+    /* TRANSICIONES */
+
+    --transition-fast: 0.18s ease;
+    --transition-normal: 0.28s ease;
+
+    /* ESPACIADOS */
+
+    --space-xs: 8px;
+    --space-sm: 14px;
+    --space-md: 22px;
+    --space-lg: 32px;
+    --space-xl: 48px;
+
+}

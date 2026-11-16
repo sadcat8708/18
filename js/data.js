@@ -52,28 +52,28 @@ export const detailsData = [
 // Sección de gatitos
 export const catsData = [
     {
-        name: "Gatito curioso",
-        description: "Siempre investigando qué sucede a su alrededor.",
-        emoji: "🐱",
-        message: "¡Miau! Espero que hoy tengas un día maravilloso."
+        name: "Gatito alegre",
+        description: "Un pequeño compañero lleno de alegría y ternura.",
+        image: "assets/illustrations/gatitos/gatito-alegre.png",
+        message: "¡Que nunca te falten motivos para sonreír! ♡"
     },
     {
         name: "Gatito dormilón",
-        description: "Especialista en encontrar el lugar más cómodo.",
-        emoji: "🐈",
-        message: "Un recordatorio gatuno: también mereces descansar."
+        description: "Especialista en encontrar el lugar más cómodo para descansar.",
+        image: "assets/illustrations/gatitos/gatito-dormilon.png",
+        message: "Un recordatorio gatuno: también mereces descansar. 💤"
     },
     {
-        name: "Gatito feliz",
-        description: "Pequeño, alegre y lleno de energía.",
-        emoji: "😺",
-        message: "¡Que nunca te falten motivos para sonreír!"
+        name: "Gatito regalón",
+        description: "Un pequeño regalo lleno de ternura y estilo.",
+        image: "assets/illustrations/gatitos/gatito-regalon.png",
+        message: "¡Hoy mereces recibir muchas sorpresas bonitas! 🎁"
     },
     {
-        name: "Gatito elegante",
-        description: "Siempre preparado para una ocasión especial.",
-        emoji: "🐈‍⬛",
-        message: "Hoy es un buen día para brillar a tu manera."
+        name: "Gatito sorpresa",
+        description: "Siempre aparece con un mensaje especial.",
+        image: "assets/illustrations/gatitos/gatito-sorpresa.png",
+        message: "¡Este gatito te manda un saludo especial! 💌"
     }
 ];
 

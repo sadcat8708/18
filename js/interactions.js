@@ -118,7 +118,7 @@ function renderDetails() {
 }
 
 /**
- * Muestra las tarjetas de gatitos.
+ * Muestra las tarjetas de gatitos con sus ilustraciones.
  */
 function renderCats() {
     const container = document.getElementById("cats-container");
@@ -130,24 +130,43 @@ function renderCats() {
     catsData.forEach(cat => {
         const card = createElement("article", "cat-card");
 
-        const emoji = createElement(
+        // Contenedor de la ilustración
+        const imageContainer = createElement(
             "div",
-            "cat-emoji",
-            cat.emoji
+            "cat-image-container"
         );
 
+        // Imagen individual del gatito
+        const image = document.createElement("img");
+
+        image.className = "cat-image";
+        image.src = cat.image;
+        image.alt = cat.name;
+        image.loading = "lazy";
+
+        // Evita mostrar una imagen rota si falta el archivo
+        image.addEventListener("error", () => {
+            image.alt = `No se pudo cargar la ilustración de ${cat.name}`;
+            image.classList.add("cat-image-error");
+        });
+
+        imageContainer.appendChild(image);
+
+        // Nombre del gatito
         const name = createElement(
             "h3",
             "cat-name",
             cat.name
         );
 
+        // Descripción
         const description = createElement(
             "p",
             "cat-description",
             cat.description
         );
 
+        // Botón para leer el mensaje
         const messageButton = createElement(
             "button",
             "secondary-button cat-message-button",
@@ -161,7 +180,7 @@ function renderCats() {
         });
 
         card.append(
-            emoji,
+            imageContainer,
             name,
             description,
             messageButton
@@ -176,6 +195,7 @@ function renderCats() {
  */
 function showCatMessage(message) {
     const surprise = document.getElementById("cat-surprise");
+
     const messageContainer = document.getElementById(
         "cat-surprise-message"
     );
@@ -205,6 +225,7 @@ function initCatSurprise() {
         );
 
         const surprise = document.getElementById("cat-surprise");
+
         const messageContainer = document.getElementById(
             "cat-surprise-message"
         );

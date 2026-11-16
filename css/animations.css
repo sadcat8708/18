@@ -1,13 +1,17 @@
 
 /* =========================================
    ALEXA 18 — ANIMACIONES
-   ========================================= */
+========================================= */
 
-/* Aparición general */
+/* =========================================
+   APARICIÓN GENERAL
+========================================= */
+
 @keyframes fadeIn {
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -18,6 +22,7 @@
         opacity: 0;
         transform: translateY(22px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -29,6 +34,7 @@
         opacity: 0;
         transform: translateY(-18px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -40,17 +46,22 @@
         opacity: 0;
         transform: scale(0.92);
     }
+
     to {
         opacity: 1;
         transform: scale(1);
     }
 }
 
-/* Elementos decorativos */
+/* =========================================
+   ELEMENTOS DECORATIVOS
+========================================= */
+
 @keyframes float {
     0%, 100% {
         transform: translateY(0);
     }
+
     50% {
         transform: translateY(-12px);
     }
@@ -60,6 +71,7 @@
     0%, 100% {
         transform: translate(0, 0) rotate(0deg);
     }
+
     50% {
         transform: translate(5px, -9px) rotate(4deg);
     }
@@ -69,6 +81,7 @@
     0%, 100% {
         transform: rotate(-5deg);
     }
+
     50% {
         transform: rotate(5deg);
     }
@@ -78,29 +91,54 @@
     0%, 100% {
         transform: scale(1);
     }
+
     50% {
         transform: scale(1.06);
     }
 }
 
-/* Portada */
+/* =========================================
+   PORTADA
+========================================= */
+
 .home-content {
     animation: fadeUp 0.9s ease both;
 }
+
+/* Movimiento suave del gatito */
 
 .home-illustration {
     animation: float 5s ease-in-out infinite;
 }
 
+/* Marco decorativo */
+
+.illustration-frame {
+    animation: pulseSoft 6s ease-in-out infinite;
+}
+
+/* Flores decorativas */
+
 .flower-decoration {
     animation: gentleRotate 6s ease-in-out infinite;
 }
+
+/* Estrellas */
+
+.star-decoration {
+    animation: floatSoft 7s ease-in-out infinite;
+}
+
+/* Corazón */
 
 .heart-decoration {
     animation: pulseSoft 3s ease-in-out infinite;
 }
 
-/* Decoraciones del fondo */
+/* =========================================
+   DECORACIONES DEL FONDO
+========================================= */
+
 .background-decoration {
     animation: floatSoft 8s ease-in-out infinite;
 }
@@ -109,7 +147,10 @@
     animation-delay: 1.5s;
 }
 
-/* Navegación */
+/* =========================================
+   NAVEGACIÓN
+========================================= */
+
 .sidebar {
     animation: fadeIn 0.4s ease both;
 }
@@ -125,7 +166,10 @@
     transform: translateX(4px);
 }
 
-/* Secciones */
+/* =========================================
+   SECCIONES
+========================================= */
+
 .scene:not([hidden]) {
     animation: fadeIn 0.45s ease both;
 }
@@ -134,7 +178,10 @@
     animation: fadeUp 0.65s ease both;
 }
 
-/* Tarjetas */
+/* =========================================
+   TARJETAS
+========================================= */
+
 .detail-card,
 .cat-card,
 .surprise-card {
@@ -149,7 +196,10 @@
     transform: translateY(-5px);
 }
 
-/* Botones */
+/* =========================================
+   BOTONES
+========================================= */
+
 .primary-button,
 .secondary-button {
     transition:
@@ -168,7 +218,10 @@
     transform: scale(0.97);
 }
 
-/* Sobre de la carta */
+/* =========================================
+   SOBRE DE LA CARTA
+========================================= */
+
 .letter-envelope {
     transition: transform 0.4s ease;
 }
@@ -183,7 +236,10 @@
         transform 0.5s ease;
 }
 
-/* Contador */
+/* =========================================
+   CONTADOR
+========================================= */
+
 .countdown-item {
     animation: scaleIn 0.6s ease both;
 }
@@ -200,14 +256,22 @@
     animation-delay: 0.3s;
 }
 
-/* Mensajes sorpresa */
+/* =========================================
+   MENSAJES SORPRESA
+========================================= */
+
 .cat-surprise,
 .surprise-message {
     animation: fadeUp 0.5s ease both;
 }
 
-/* Accesibilidad: reducir movimiento */
+/* =========================================
+   ACCESIBILIDAD
+   REDUCIR MOVIMIENTO
+========================================= */
+
 @media (prefers-reduced-motion: reduce) {
+
     *,
     *::before,
     *::after {

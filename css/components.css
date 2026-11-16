@@ -53,6 +53,14 @@
     );
     border: 1px solid var(--dusty-pink);
     border-radius: var(--radius-medium);
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.detail-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
 }
 
 .detail-icon {
@@ -75,35 +83,105 @@
     margin: 0;
 }
 
-/* TARJETAS DE GATITOS */
+/* =========================================
+   TARJETAS DE GATITOS
+========================================= */
 
 .cat-card {
-    padding: 20px;
-    background: #FFFAF5;
-    border: 1px solid var(--cream-dark);
-    border-radius: var(--radius-medium);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 18px;
+    overflow: hidden;
+    background: linear-gradient(
+        160deg,
+        #FFFCF8,
+        #FFF0F0
+    );
+    border: 1px solid var(--dusty-pink);
+    border-radius: 22px;
     box-shadow: var(--shadow-soft);
     text-align: center;
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease,
+        border-color 0.35s ease;
 }
 
-.cat-card img {
+.cat-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent-color);
+    box-shadow: var(--shadow-medium);
+}
+
+/* CONTENEDOR DE LA IMAGEN */
+
+.cat-image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 270px;
+    aspect-ratio: 1 / 1;
+    margin: 0 auto 18px;
+    overflow: hidden;
+    background: #F9DDE3;
+    border: 3px solid #FFF8F5;
+    border-radius: 18px;
+    box-shadow: 0 5px 15px rgba(150, 85, 95, 0.12);
+    transition:
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+.cat-card:hover .cat-image-container {
+    transform: scale(1.025);
+    box-shadow: 0 8px 20px rgba(150, 85, 95, 0.18);
+}
+
+/* ILUSTRACIÓN DEL GATITO */
+
+.cat-image {
     display: block;
     width: 100%;
-    max-width: 230px;
-    height: 180px;
-    margin: 0 auto 18px;
-    object-fit: cover;
-    background: var(--soft-pink);
-    border-radius: 15px;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 14px;
+    transition: transform 0.5s ease;
 }
 
-.cat-card h3 {
-    margin-bottom: 8px;
+.cat-card:hover .cat-image {
+    transform: scale(1.045);
 }
 
-.cat-card p {
+.cat-image-error {
+    visibility: hidden;
+}
+
+/* NOMBRE DEL GATITO */
+
+.cat-name {
+    margin: 0 0 9px;
+    color: var(--brown-dark);
+    font-family: var(--font-heading);
+    font-size: 21px;
+}
+
+/* DESCRIPCIÓN */
+
+.cat-description {
+    max-width: 260px;
+    margin: 0 0 17px;
     color: var(--text-soft);
     font-size: 13px;
+    line-height: 1.7;
+}
+
+/* BOTÓN DEL MENSAJE */
+
+.cat-message-button {
+    margin-top: auto;
 }
 
 /* SORPRESA DE GATITOS */
@@ -298,12 +376,20 @@
 
 @media (prefers-reduced-motion: reduce) {
     .card,
+    .detail-card,
+    .cat-card,
+    .cat-image-container,
+    .cat-image,
     .primary-button,
     .secondary-button {
         transition: none;
     }
 
-    .card:hover {
+    .card:hover,
+    .detail-card:hover,
+    .cat-card:hover,
+    .cat-card:hover .cat-image-container,
+    .cat-card:hover .cat-image {
         transform: none;
     }
 }
@@ -315,8 +401,16 @@
         grid-template-columns: 1fr;
     }
 
-    .cat-card img {
-        height: 160px;
+    .cat-card {
+        padding: 15px;
+    }
+
+    .cat-image-container {
+        max-width: 250px;
+    }
+
+    .cat-name {
+        font-size: 19px;
     }
 
     .detail-card {

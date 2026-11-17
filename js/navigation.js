@@ -1,17 +1,41 @@
 
 /* =========================================
    ALEXA 18 — NAVEGACIÓN
-   ========================================= */
+========================================= */
+
+import { animateSection } from "./animations.js";
 
 let currentSection = "inicio";
+let navigationInitialized = false;
 
-const sidebar = document.getElementById("sidebar");
-const sidebarOverlay = document.getElementById("sidebar-overlay");
-const menuToggle = document.getElementById("menu-toggle");
-const sidebarClose = document.getElementById("sidebar-close");
-const announcement = document.getElementById("navigation-announcement");
+let sidebar = null;
+let sidebarOverlay = null;
+let menuToggle = null;
+let sidebarClose = null;
+let announcement = null;
+let navigationButtons = [];
 
-const navigationButtons = document.querySelectorAll("[data-go]");
+/**
+ * Comprueba si el usuario prefiere
+ * movimiento reducido.
+ */
+function prefersReducedMotion() {
+    return window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+    ).matches;
+}
+
+/**
+ * Actualiza el estado accesible del botón del menú.
+ */
+function updateMenuState(isOpen) {
+    if (menuToggle) {
+        menuToggle.setAttribute(
+            "aria-expanded",
+            String(isOpen)
+        );
+    }
+}
 
 /**
  * Abre el menú lateral.
@@ -23,6 +47,8 @@ export function openSidebar() {
     sidebarOverlay?.classList.add("visible");
 
     document.body.classList.add("menu-open");
+
+    updateMenuState(true);
 }
 
 /**
@@ -35,6 +61,8 @@ export function closeSidebar() {
     sidebarOverlay?.classList.remove("visible");
 
     document.body.classList.remove("menu-open");
+
+    updateMenuState(false);
 }
 
 /**
@@ -43,43 +71,60 @@ export function closeSidebar() {
 export function navigateTo(sectionId) {
     const targetSection = document.getElementById(sectionId);
 
-    if (!targetSection || !targetSection.classList.contains("scene")) {
+    if (
+        !targetSection ||
+        !targetSection.classList.contains("scene")
+    ) {
         console.warn(`No se encontró la sección: ${sectionId}`);
         return;
     }
 
-    // Ocultar todas las secciones
+    // Cerrar el menú si ya estamos en esa sección.
+    if (currentSection === sectionId && !targetSection.hidden) {
+        closeSidebar();
+        return;
+    }
+
+    // Ocultar todas las secciones.
     document.querySelectorAll(".scene").forEach(section => {
         section.hidden = true;
     });
 
-    // Mostrar la sección seleccionada
+    // Mostrar la sección seleccionada.
     targetSection.hidden = false;
 
-    // Guardar sección actual
+    // Guardar la sección actual.
     currentSection = sectionId;
 
-    // Actualizar botones del menú
+    // Actualizar los botones del menú.
     navigationButtons.forEach(button => {
         const isActive = button.dataset.go === sectionId;
 
         button.classList.toggle("active", isActive);
-        button.setAttribute("aria-current", isActive ? "page" : "false");
+
+        if (isActive) {
+            button.setAttribute("aria-current", "page");
+        } else {
+            button.removeAttribute("aria-current");
+        }
     });
 
-    // Cerrar menú después de navegar
+    // Activar la animación de entrada.
+    animateSection(targetSection);
+
+    // Cerrar el menú después de navegar.
     closeSidebar();
 
-    // Volver al inicio del contenido
+    // Volver al inicio del contenido.
     window.scrollTo({
         top: 0,
-        behavior: "smooth"
+        behavior: prefersReducedMotion() ? "auto" : "smooth"
     });
 
-    // Anunciar cambio de sección
+    // Anunciar el cambio de sección.
     if (announcement) {
-        const activeButton = document.querySelector(
-            `[data-go="${sectionId}"]`
+        const activeButton = navigationButtons.find(
+            button => button.dataset.go === sectionId
         );
 
         const sectionName = activeButton
@@ -98,32 +143,51 @@ export function getCurrentSection() {
 }
 
 /**
- * Inicializa todos los eventos de navegación.
+ * Inicializa los eventos de navegación.
  */
 export function initNavigation() {
-    // Botones de navegación
+    // Evitar inicializaciones duplicadas.
+    if (navigationInitialized) return;
+
+    navigationInitialized = true;
+
+    // Obtener elementos del menú.
+    sidebar = document.getElementById("sidebar");
+    sidebarOverlay = document.getElementById("sidebar-overlay");
+    menuToggle = document.getElementById("menu-toggle");
+    sidebarClose = document.getElementById("sidebar-close");
+    announcement = document.getElementById("navigation-announcement");
+
+    navigationButtons = Array.from(
+        document.querySelectorAll("[data-go]")
+    );
+
+    // Botones de navegación.
     navigationButtons.forEach(button => {
         button.addEventListener("click", () => {
             navigateTo(button.dataset.go);
         });
     });
 
-    // Abrir menú
+    // Abrir menú.
     menuToggle?.addEventListener("click", openSidebar);
 
-    // Cerrar menú
+    // Cerrar menú.
     sidebarClose?.addEventListener("click", closeSidebar);
 
-    // Cerrar al tocar el fondo
+    // Cerrar al tocar el fondo.
     sidebarOverlay?.addEventListener("click", closeSidebar);
 
-    // Cerrar con Escape
+    // Cerrar con Escape.
     document.addEventListener("keydown", event => {
         if (event.key === "Escape") {
             closeSidebar();
         }
     });
 
-    // Mostrar sección inicial
+    // Estado inicial del menú.
+    updateMenuState(false);
+
+    // Mostrar sección inicial.
     navigateTo("inicio");
 }

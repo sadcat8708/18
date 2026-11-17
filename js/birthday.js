@@ -1,12 +1,15 @@
 
 /* =========================================
    ALEXA 18 — DESBLOQUEO DEL CUMPLEAÑOS
-   ========================================= */
+========================================= */
 
 import { isBirthdayUnlocked } from "./config.js";
 import { birthdayData, surprisesData } from "./data.js";
+import { refreshAnimations } from "./animations.js";
 
 let birthdayCheckInterval = null;
+let birthdayContentRendered = false;
+let birthdayInitialized = false;
 
 /**
  * Busca los elementos principales del cumpleaños.
@@ -28,20 +31,25 @@ function getBirthdayElements() {
 function renderBirthdayContent() {
     const elements = getBirthdayElements();
 
+    if (!birthdayData || typeof birthdayData !== "object") {
+        console.error("No se encontraron los datos del cumpleaños.");
+        return;
+    }
+
     if (elements.title) {
-        elements.title.textContent = birthdayData.title;
+        elements.title.textContent = birthdayData.title || "¡Feliz cumpleaños!";
     }
 
     if (elements.subtitle) {
-        elements.subtitle.textContent = birthdayData.subtitle;
+        elements.subtitle.textContent = birthdayData.subtitle || "";
     }
 
     if (elements.message) {
-        elements.message.textContent = birthdayData.message;
+        elements.message.textContent = birthdayData.message || "";
     }
 
     if (elements.closing) {
-        elements.closing.textContent = birthdayData.closing;
+        elements.closing.textContent = birthdayData.closing || "";
     }
 
     renderBirthdaySurprises();
@@ -51,31 +59,47 @@ function renderBirthdayContent() {
  * Genera las tarjetas de sorpresa.
  */
 function renderBirthdaySurprises() {
-    const container = document.querySelector(".surprises-container");
+    const container = document.querySelector(
+        ".surprises-container"
+    );
 
     if (!container) return;
 
     container.replaceChildren();
 
+    if (!Array.isArray(surprisesData)) {
+        console.warn(
+            "No se encontraron las sorpresas de cumpleaños."
+        );
+        return;
+    }
+
     surprisesData.forEach(surprise => {
+        if (!surprise || typeof surprise !== "object") return;
+
         const card = document.createElement("article");
         card.className = "surprise-card";
 
         const icon = document.createElement("span");
         icon.className = "surprise-icon";
-        icon.textContent = surprise.icon;
+        icon.textContent = surprise.icon || "♡";
+        icon.setAttribute("aria-hidden", "true");
 
         const title = document.createElement("h3");
         title.className = "surprise-title";
-        title.textContent = surprise.title;
+        title.textContent =
+            surprise.title || "Una sorpresa especial";
 
         const text = document.createElement("p");
         text.className = "surprise-text";
-        text.textContent = surprise.text;
+        text.textContent = surprise.text || "";
 
         card.append(icon, title, text);
         container.appendChild(card);
     });
+
+    // Activar animaciones en las tarjetas nuevas.
+    refreshAnimations();
 }
 
 /**
@@ -107,7 +131,12 @@ function showUnlockedBirthday() {
         elements.unlocked.hidden = false;
     }
 
-    renderBirthdayContent();
+    // Evitar generar nuevamente el contenido.
+    if (!birthdayContentRendered) {
+        renderBirthdayContent();
+        birthdayContentRendered = true;
+    }
+
     stopBirthdayCheck();
 }
 
@@ -119,6 +148,15 @@ export function checkBirthday() {
         showUnlockedBirthday();
     } else {
         showLockedBirthday();
+    }
+}
+
+/**
+ * Comprueba la fecha cuando se regresa a la pestaña.
+ */
+function handleBirthdayVisibility() {
+    if (!document.hidden) {
+        checkBirthday();
     }
 }
 
@@ -136,11 +174,25 @@ export function stopBirthdayCheck() {
  * Inicializa el sistema de cumpleaños.
  */
 export function initBirthday() {
-    stopBirthdayCheck();
+    // Evitar inicializaciones duplicadas.
+    if (birthdayInitialized) return;
 
+    birthdayInitialized = true;
+
+    // Comprobar inmediatamente la fecha.
     checkBirthday();
 
+    // Escuchar cuando se regresa a la pestaña.
+    document.addEventListener(
+        "visibilitychange",
+        handleBirthdayVisibility
+    );
+
+    // Comprobar periódicamente hasta el cumpleaños.
     if (!isBirthdayUnlocked()) {
-        birthdayCheckInterval = setInterval(checkBirthday, 1000);
+        birthdayCheckInterval = setInterval(
+            checkBirthday,
+            1000
+        );
     }
 }

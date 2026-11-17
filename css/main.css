@@ -390,18 +390,19 @@ p {
     font-size: 28px;
 }
 
-.home-footer {
-    margin-top: 45px;
-    color: var(--text-light);
-    font-size: 10px;
-    letter-spacing: 3px;
-}
+/* =========================================
+   DECORACIONES INTERACTIVAS
+========================================= */
 
 .home-decoration {
     position: absolute;
+    z-index: 3;
     color: var(--old-rose);
-    pointer-events: none;
+    pointer-events: auto;
+    cursor: pointer;
     opacity: 0.6;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .flower-decoration {
@@ -773,10 +774,9 @@ p {
 }
 
 /* =========================================
-   ALEXA 18 — MEJORA DEL DIARIO DIGITAL
+   MEJORA DEL DIARIO DIGITAL
 ========================================= */
 
-/* Contenedor de los recuerdos */
 #story-container {
     display: flex;
     flex-direction: column;
@@ -786,7 +786,6 @@ p {
     text-align: left;
 }
 
-/* Cada recuerdo como una página independiente */
 #story-container .journal-page {
     position: relative;
     width: 100%;
@@ -807,14 +806,12 @@ p {
         border-color 0.3s ease;
 }
 
-/* Efecto al pasar el cursor */
 #story-container .journal-page:hover {
     transform: translateY(-4px);
     border-color: var(--dusty-pink);
     box-shadow: 0 10px 25px rgba(95, 65, 57, 0.12);
 }
 
-/* Fecha del recuerdo */
 #story-container .journal-date {
     margin-bottom: 10px;
     color: var(--accent-dark);
@@ -822,7 +819,6 @@ p {
     letter-spacing: 1px;
 }
 
-/* Título */
 #story-container .journal-title {
     margin-bottom: 18px;
     color: var(--brown-dark);
@@ -830,14 +826,12 @@ p {
     font-size: 24px;
 }
 
-/* Descripción */
 #story-container .journal-text {
     color: var(--text-soft);
     font-size: 14px;
     line-height: 2;
 }
 
-/* Número de cada recuerdo */
 #story-container .journal-number {
     display: block;
     margin-top: 15px;
@@ -847,7 +841,6 @@ p {
     text-align: right;
 }
 
-/* Decoración lateral del diario */
 #story-container .journal-page::before {
     position: absolute;
     top: 0;
@@ -858,7 +851,6 @@ p {
     content: "";
 }
 
-/* Adaptación a celulares */
 @media (max-width: 650px) {
     #story-container {
         gap: 16px;
@@ -882,7 +874,6 @@ p {
     }
 }
 
-/* Accesibilidad */
 @media (prefers-reduced-motion: reduce) {
     #story-container .journal-page {
         transition: none;
@@ -894,14 +885,13 @@ p {
 }
 
 /* =========================================
-   ALEXA 18 — LÍNEA DE TIEMPO DE RECUERDOS
+   LÍNEA DE TIEMPO DE RECUERDOS
 ========================================= */
 
 #story-container {
     position: relative;
 }
 
-/* Línea que conecta los recuerdos */
 #story-container::before {
     position: absolute;
     top: 25px;
@@ -917,12 +907,10 @@ p {
     content: "";
 }
 
-/* Espacio para los corazones */
 #story-container .journal-page {
     padding-left: 55px;
 }
 
-/* Corazón decorativo de cada recuerdo */
 #story-container .journal-page::after {
     position: absolute;
     top: 35px;
@@ -940,12 +928,10 @@ p {
     z-index: 2;
 }
 
-/* Evitar que las antiguas líneas laterales interfieran */
 #story-container .journal-page::before {
     display: none;
 }
 
-/* Pequeño efecto al pasar el cursor */
 #story-container .journal-page:hover::after {
     color: #FFFFFF;
     background: #C77F91;
@@ -953,7 +939,6 @@ p {
     transition: 0.3s ease;
 }
 
-/* Adaptación para celulares */
 @media (max-width: 650px) {
     #story-container::before {
         left: 12px;
@@ -968,14 +953,15 @@ p {
     }
 }
 
-/* Accesibilidad */
 @media (prefers-reduced-motion: reduce) {
     #story-container .journal-page:hover::after {
         transform: none;
         transition: none;
     }
 }
+
 /* Evitar corazones duplicados en la línea de tiempo */
+
 #story-container .journal-decoration {
     display: none;
 }

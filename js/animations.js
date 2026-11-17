@@ -1,14 +1,22 @@
 
 /* =========================================
    ALEXA 18 — ANIMACIONES JAVASCRIPT
-   ========================================= */
+========================================= */
 
-/**
- * Observa los elementos y activa su animación
- * cuando aparecen en pantalla.
- */
 let observer = null;
 
+/**
+ * Comprueba si el navegador admite animaciones reducidas.
+ */
+function prefersReducedMotion() {
+    return window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+    ).matches;
+}
+
+/**
+ * Crea el observador de elementos.
+ */
 function createObserver() {
     if (!("IntersectionObserver" in window)) {
         return null;
@@ -18,7 +26,7 @@ function createObserver() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add("is-visible");
-                observer.unobserve(entry.target);
+                observer?.unobserve(entry.target);
             }
         });
     }, {
@@ -27,9 +35,22 @@ function createObserver() {
 }
 
 /**
- * Prepara los elementos que tendrán animación.
+ * Prepara las tarjetas y elementos animados.
  */
 export function prepareAnimations() {
+    if (prefersReducedMotion()) {
+        document.querySelectorAll(
+            ".detail-card, .cat-card, .surprise-card, .journal-page"
+        ).forEach(element => {
+            element.classList.add("is-visible");
+            element.classList.remove("will-animate");
+        });
+
+        observer?.disconnect();
+        observer = null;
+        return;
+    }
+
     observer?.disconnect();
     observer = createObserver();
 
@@ -38,6 +59,10 @@ export function prepareAnimations() {
     );
 
     animatedElements.forEach(element => {
+        if (element.classList.contains("is-visible")) {
+            return;
+        }
+
         if (observer) {
             element.classList.add("will-animate");
             observer.observe(element);
@@ -48,25 +73,35 @@ export function prepareAnimations() {
 }
 
 /**
- * Activa una pequeña animación al cambiar de sección.
+ * Activa las animaciones de elementos nuevos.
+ * Útil cuando JavaScript genera tarjetas dinámicamente.
+ */
+export function refreshAnimations() {
+    prepareAnimations();
+}
+
+/**
+ * Anima una sección al cambiar de pantalla.
  */
 export function animateSection(section) {
-    if (!section) return;
+    if (!section || prefersReducedMotion()) {
+        return;
+    }
 
     section.classList.remove("section-enter");
 
-    // Reiniciar la animación
+    // Reiniciar la animación.
     void section.offsetWidth;
 
     section.classList.add("section-enter");
 }
 
 /**
- * Efecto de movimiento suave en elementos decorativos.
+ * Prepara las decoraciones de la portada.
  */
 export function initDecorations() {
     const decorations = document.querySelectorAll(
-        ".background-decoration, .flower-decoration, .heart-decoration"
+        ".background-decoration, .flower-decoration, .heart-decoration, .star-decoration"
     );
 
     decorations.forEach((decoration, index) => {
@@ -75,7 +110,7 @@ export function initDecorations() {
 }
 
 /**
- * Inicializa las animaciones.
+ * Inicializa todas las animaciones.
  */
 export function initAnimations() {
     prepareAnimations();

@@ -1,25 +1,49 @@
 
 /* =========================================
-   ALEXA 18 — DISEÑO RESPONSIVE
-   ========================================= */
+   ALEXA 18
+   DISEÑO RESPONSIVE
+========================================= */
 
-/* Tablets */
+
+/* =========================================
+   TABLETAS Y PANTALLAS MEDIANAS
+========================================= */
+
 @media (max-width: 1024px) {
+
     :root {
         --sidebar-width: 235px;
     }
 
+    .main-content {
+        padding: 22px;
+    }
+
+    .scene {
+        padding: 15px;
+    }
+
     .scene-content {
-        width: min(100% - 50px, 850px);
+        max-width: 100%;
+        padding: 35px 25px;
     }
 
     .home-content {
-        gap: 35px;
+        max-width: 700px;
     }
 
-    .details-grid,
-    .cats-grid {
+    .home-title {
+        font-size: clamp(55px, 9vw, 90px);
+    }
+
+    .cards-grid,
+    #details-container,
+    #cats-container {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .countdown {
+        max-width: 550px;
     }
 
     .surprises-container {
@@ -27,142 +51,187 @@
     }
 }
 
-/* Celulares y tablets pequeñas */
+
+/* =========================================
+   MÓVILES
+========================================= */
+
 @media (max-width: 650px) {
-    :root {
-        --sidebar-width: 280px;
-    }
 
-    body {
-        overflow-x: hidden;
-    }
+    /* MENÚ LATERAL */
 
-    /* Menú lateral */
     .sidebar {
-        width: min(var(--sidebar-width), 85vw);
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
         z-index: 1000;
+        width: 280px;
+        max-width: 85vw;
+        transform: translateX(-100%);
+        transition: transform var(--transition-normal);
     }
 
     .sidebar.open {
         transform: translateX(0);
     }
 
-    .sidebar-overlay {
-        position: fixed;
-        inset: 0;
-        z-index: 999;
-        background: rgba(55, 39, 32, 0.35);
-        opacity: 0;
-        visibility: hidden;
-        transition:
-            opacity 0.3s ease,
-            visibility 0.3s ease;
+    .sidebar-close {
+        display: block;
     }
 
     .sidebar-overlay.visible {
-        opacity: 1;
-        visibility: visible;
+        position: fixed;
+        z-index: 900;
+        inset: 0;
+        display: block;
+        background: rgba(63, 44, 38, 0.35);
     }
 
-    /* Encabezado móvil */
+
+    /* ENCABEZADO MÓVIL */
+
     .mobile-header {
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        position: sticky;
-        top: 0;
-        z-index: 900;
-        width: 100%;
-        min-height: 65px;
-        padding: 10px 18px;
-        background: var(--cream-light);
-        border-bottom: 1px solid var(--border-color);
-    }
-
-    .menu-toggle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 42px;
-        height: 42px;
-        border: 1px solid var(--border-color);
-        border-radius: 12px;
-        background: var(--cream);
+        min-height: 60px;
+        margin-bottom: 10px;
+        padding: 10px 15px;
         color: var(--brown-dark);
-        font-size: 1.35rem;
-        cursor: pointer;
+        background: var(--cream-light);
+        border: var(--border-soft);
+        border-radius: var(--radius-medium);
+        font-family: var(--font-heading);
+        letter-spacing: 2px;
     }
 
     .mobile-header-title {
         color: var(--brown-dark);
-        font-family: var(--font-title);
-        font-size: 1.15rem;
+        font-size: 19px;
+        font-family: var(--font-heading);
     }
 
-    /* Contenido principal */
+    .mobile-header-title small {
+        color: var(--accent-color);
+        font-size: 13px;
+    }
+
+    .menu-toggle {
+        display: grid;
+        place-items: center;
+        width: 40px;
+        height: 40px;
+        color: var(--brown);
+        background: transparent;
+        border: none;
+        border-radius: var(--radius-small);
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .menu-toggle:hover {
+        background: var(--soft-pink);
+    }
+
+
+    /* CONTENIDO PRINCIPAL */
+
     .main-content {
-        width: 100%;
+        min-height: 100vh;
         margin-left: 0;
+        padding: 12px;
     }
 
     .scene {
-        min-height: calc(100vh - 65px);
-        padding: 35px 0;
+        min-height: calc(100vh - 85px);
+        padding: 15px 5px;
     }
 
     .scene-content {
-        width: calc(100% - 36px);
-        max-width: 520px;
-    }
-
-    /* Portada */
-    .home-content {
-        flex-direction: column;
-        justify-content: center;
-        gap: 28px;
-        text-align: center;
-        padding: 25px 0;
-    }
-
-    .home-text {
         width: 100%;
+        padding: 28px 18px;
+        border-radius: var(--radius-medium);
     }
 
-    .home-illustration {
-        width: min(75%, 290px);
-        margin: 0 auto;
+    .scene-title,
+    .scene-content h2 {
+        font-size: clamp(29px, 8vw, 38px);
+    }
+
+    .section-description {
+        margin-bottom: 25px;
+        font-size: 13px;
+    }
+
+
+    /* PORTADA */
+
+    .home-scene {
+        min-height: calc(100vh - 85px);
+    }
+
+    .home-content {
+        padding: 35px 10px;
     }
 
     .home-title {
-        font-size: clamp(2.2rem, 10vw, 3.4rem);
+        font-size: clamp(52px, 15vw, 75px);
+        letter-spacing: 2px;
     }
 
-    .home-description {
-        font-size: 0.95rem;
+    .home-subtitle {
+        font-size: 13px;
     }
 
-    .home-buttons {
-        justify-content: center;
-        flex-wrap: wrap;
+    .home-handwritten {
+        font-size: 22px;
     }
 
-    /* Títulos */
-    .scene-title {
-        font-size: clamp(2rem, 8vw, 2.7rem);
+    .illustration-frame {
+        width: 175px;
+        height: 175px;
     }
 
-    .scene-subtitle {
-        font-size: 0.95rem;
+    .illustration-cat {
+        width: 42px;
+        height: 42px;
+        font-size: 24px;
     }
 
-    /* Cuadrículas */
+    .illustration-star {
+        font-size: 23px;
+    }
+
+
+    /* DECORACIONES */
+
+    .flower-decoration {
+        top: 8%;
+        left: 2%;
+        font-size: 32px;
+    }
+
+    .star-decoration {
+        top: 15%;
+        right: 4%;
+        font-size: 30px;
+    }
+
+    .heart-decoration {
+        right: 5%;
+        bottom: 8%;
+        font-size: 34px;
+    }
+
+
+    /* TARJETAS */
+
+    .cards-grid,
     .details-grid,
     .cats-grid,
-    .surprises-container {
-        grid-template-columns: 1fr;
-        gap: 16px;
+    #details-container,
+    #cats-container {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 15px;
+        margin: 22px auto;
     }
 
     .detail-card,
@@ -171,118 +240,228 @@
         width: 100%;
     }
 
-    /* Diario */
-    .journal-page {
-        padding: 22px 18px;
-    }
-
-    .journal-title {
-        font-size: 1.6rem;
-    }
-
-    /* Carta */
-    .letter-envelope {
-        width: 100%;
-        max-width: 340px;
-        margin: 0 auto;
-    }
-
-    .letter-paper {
-        padding: 22px 18px;
-    }
-
-    /* Contador */
-    .countdown {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
-        max-width: 340px;
-        margin: 25px auto;
-    }
-
-    .countdown-item {
-        padding: 16px 10px;
-    }
-
-    .countdown-number {
-        font-size: 2rem;
-    }
-
-    /* Cumpleaños */
-    .birthday-content {
-        padding: 20px 0;
-        text-align: center;
-    }
-
-    .birthday-title {
-        font-size: clamp(2.1rem, 9vw, 3rem);
-    }
-
-    /* Botones */
-    .primary-button,
-    .secondary-button {
-        min-height: 44px;
-        padding: 12px 20px;
-    }
-}
-
-/* Celulares pequeños */
-@media (max-width: 380px) {
-    .scene-content {
-        width: calc(100% - 26px);
-    }
-
-    .mobile-header {
-        padding-inline: 12px;
-    }
-
-    .home-title {
-        font-size: 2.15rem;
-    }
-
-    .countdown {
-        gap: 8px;
-    }
-
-    .countdown-item {
-        padding: 13px 8px;
-    }
-
-    .countdown-number {
-        font-size: 1.7rem;
-    }
-
-    .journal-page {
-        padding: 18px 14px;
-    }
-}
-
-/* Pantallas grandes */
-@media (min-width: 1400px) {
-    .scene-content {
-        max-width: 1100px;
-    }
-
-    .home-title {
-        font-size: 4.5rem;
-    }
-}
-/* Evitar desbordamientos en dispositivos pequeños */
-@media (max-width: 650px) {
-    img,
-    video,
-    canvas {
+    .cat-image,
+    .cat-card img {
         max-width: 100%;
         height: auto;
     }
 
-    .scene,
-    .scene-content,
-    .home-content {
-        min-width: 0;
+
+    /* DIARIO DIGITAL */
+
+    #story-container {
+        gap: 16px;
     }
 
-    button {
-        touch-action: manipulation;
+    #story-container::before {
+        left: 12px;
     }
+
+    #story-container .journal-page {
+        min-height: auto;
+        padding: 28px 20px 28px 43px;
+    }
+
+    #story-container .journal-page::after {
+        left: 2px;
+    }
+
+    #story-container .journal-title {
+        font-size: 21px;
+    }
+
+    #story-container .journal-text {
+        font-size: 13px;
+    }
+
+    .journal-page {
+        padding: 25px 18px;
+    }
+
+
+    /* CARTA */
+
+    .letter-container {
+        width: 100%;
+        margin: 20px auto;
+    }
+
+    .letter-paper {
+        padding: 25px 18px;
+    }
+
+
+    /* CONTADOR */
+
+    .countdown {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 7px;
+        margin: 22px auto;
+    }
+
+    .countdown-item {
+        padding: 14px 5px;
+    }
+
+    .countdown-number {
+        font-size: clamp(21px, 6vw, 30px);
+    }
+
+    .countdown-label {
+        font-size: 9px;
+    }
+
+
+    /* CUMPLEAÑOS */
+
+    #birthday-locked,
+    #birthday-unlocked {
+        padding: 22px 15px;
+    }
+
+    #birthday-title {
+        font-size: clamp(35px, 10vw, 48px);
+    }
+
+    .birthday-message {
+        padding: 18px 12px;
+    }
+
+    .surprises-container {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+
+    /* BOTONES */
+
+    .navigation-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .navigation-buttons button {
+        width: 100%;
+    }
+
+    .primary-button,
+    .secondary-button {
+        min-height: 46px;
+        padding: 12px 20px;
+    }
+}
+
+
+/* =========================================
+   MÓVILES PEQUEÑOS
+========================================= */
+
+@media (max-width: 380px) {
+
+    .main-content {
+        padding: 8px;
+    }
+
+    .scene {
+        padding: 10px 2px;
+    }
+
+    .scene-content {
+        padding: 23px 13px;
+    }
+
+    .home-title {
+        font-size: 48px;
+    }
+
+    .illustration-frame {
+        width: 155px;
+        height: 155px;
+    }
+
+    .countdown {
+        gap: 5px;
+    }
+
+    .countdown-item {
+        padding: 12px 3px;
+    }
+
+    .countdown-number {
+        font-size: 21px;
+    }
+
+    .countdown-label {
+        font-size: 8px;
+    }
+
+    .sidebar {
+        width: 260px;
+    }
+}
+
+
+/* =========================================
+   PANTALLAS GRANDES
+========================================= */
+
+@media (min-width: 1400px) {
+
+    .main-content {
+        padding: 45px;
+    }
+
+    .scene-content {
+        max-width: 1000px;
+    }
+
+    .home-content {
+        max-width: 850px;
+    }
+
+    .cards-grid {
+        gap: 22px;
+    }
+}
+
+
+/* =========================================
+   IMÁGENES Y MEDIOS
+========================================= */
+
+img {
+    max-width: 100%;
+}
+
+video,
+canvas {
+    max-width: 100%;
+}
+
+
+/* =========================================
+   ACCESIBILIDAD
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+
+/* =========================================
+   INTERACCIÓN TÁCTIL
+========================================= */
+
+button,
+.nav-link {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }

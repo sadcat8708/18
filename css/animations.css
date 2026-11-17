@@ -274,3 +274,45 @@
         transition-duration: 0.01ms !important;
     }
 }
+/* =========================================
+   ANIMACIONES DE ELEMENTOS DINÁMICOS
+========================================= */
+
+.will-animate {
+    opacity: 0;
+    transform: translateY(22px);
+}
+
+.will-animate.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+        opacity 0.65s ease,
+        transform 0.65s ease;
+}
+
+/* Entrada de las secciones */
+
+.scene.section-enter {
+    animation: fadeIn 0.45s ease both;
+}
+
+.scene.section-enter .scene-content {
+    animation: fadeUp 0.65s ease both;
+}
+
+/* Movimiento reducido */
+
+@media (prefers-reduced-motion: reduce) {
+    .will-animate,
+    .will-animate.is-visible {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    .scene.section-enter,
+    .scene.section-enter .scene-content {
+        animation: none;
+    }
+}

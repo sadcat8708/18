@@ -1,7 +1,7 @@
 
 /* =========================================
    ALEXA 18 — CUENTA REGRESIVA
-   ========================================= */
+========================================= */
 
 import {
     BIRTHDAY_DATE,
@@ -36,9 +36,16 @@ export function updateCounter() {
 
     if (!countdown) return;
 
+    // Comprobar que la fecha sea válida.
+    if (Number.isNaN(BIRTHDAY_DATE.getTime())) {
+        console.error("La fecha del cumpleaños no es válida.");
+        stopCounter();
+        return;
+    }
+
     const difference = BIRTHDAY_DATE.getTime() - Date.now();
 
-    // Si ya llegó el cumpleaños
+    // Si ya llegó el cumpleaños.
     if (isBirthdayUnlocked() || difference <= 0) {
         updateValue("days", 0);
         updateValue("hours", 0);
@@ -52,7 +59,7 @@ export function updateCounter() {
         return;
     }
 
-    // Convertir milisegundos a tiempo
+    // Convertir milisegundos a tiempo.
     const totalSeconds = Math.floor(difference / 1000);
 
     const days = Math.floor(totalSeconds / 86400);
@@ -60,6 +67,7 @@ export function updateCounter() {
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
 
+    // Actualizar los valores.
     updateValue("days", days);
     updateValue("hours", hours);
     updateValue("minutes", minutes);
@@ -95,10 +103,13 @@ export function stopCounter() {
  * Inicia la cuenta regresiva.
  */
 export function initCounter() {
+    // Evitar intervalos duplicados.
     stopCounter();
 
+    // Actualizar inmediatamente.
     updateCounter();
 
+    // Reiniciar el evento de visibilidad.
     document.removeEventListener(
         "visibilitychange",
         handleCounterVisibility
@@ -109,7 +120,12 @@ export function initCounter() {
         handleCounterVisibility
     );
 
-    if (!isBirthdayUnlocked()) {
+    // Iniciar el intervalo si todavía falta para el cumpleaños.
+    if (
+        !isBirthdayUnlocked() &&
+        !Number.isNaN(BIRTHDAY_DATE.getTime()) &&
+        document.getElementById("countdown")
+    ) {
         counterInterval = setInterval(
             updateCounter,
             1000

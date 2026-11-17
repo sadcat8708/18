@@ -1,7 +1,7 @@
 
 /* =========================================
    ALEXA 18 — CONTENIDO DE LA PÁGINA
-   ========================================= */
+========================================= */
 
 // Historia presentada como un diario digital
 export const historyData = [
@@ -25,29 +25,101 @@ export const historyData = [
     }
 ];
 
-// Detalles sobre Alexa
+
+// 18 detalles y mensajes bonitos sobre Alexa
 export const detailsData = [
     {
         icon: "♡",
         title: "Su sonrisa",
-        text: "Una de esas pequeñas cosas que pueden alegrar el día."
+        text: "Una de esas pequeñas cosas que pueden alegrar el día. Nunca pierdas esa bonita forma de sonreír."
     },
     {
         icon: "✿",
         title: "Su personalidad",
-        text: "Una combinación de carisma, alegría y momentos de tranquilidad."
+        text: "Una combinación de carisma, alegría y momentos de tranquilidad que hacen que seas alguien especial."
     },
     {
         icon: "☁",
         title: "Su forma de ser",
-        text: "Tiene una manera particular de hacer que cada momento sea diferente."
+        text: "Tienes una manera particular de hacer que cada momento sea diferente. Nunca dejes de ser tú misma."
     },
     {
         icon: "☆",
         title: "Sus ocurrencias",
-        text: "Esos detalles inesperados que terminan convirtiéndose en anécdotas."
+        text: "Esos detalles inesperados que terminan convirtiéndose en anécdotas y recuerdos que provocan sonrisas."
+    },
+    {
+        icon: "🌷",
+        title: "Su alegría",
+        text: "La alegría tiene muchas formas de expresarse y la tuya puede convertir un día normal en uno especial."
+    },
+    {
+        icon: "🦋",
+        title: "Su autenticidad",
+        text: "No necesitas parecerte a nadie más. Lo bonito está en tener tu propia esencia."
+    },
+    {
+        icon: "💗",
+        title: "Su amabilidad",
+        text: "Los pequeños gestos pueden significar muchísimo. Nunca subestimes lo bonito que es tratar bien a los demás."
+    },
+    {
+        icon: "🌟",
+        title: "Su brillo",
+        text: "Cada persona tiene algo que la hace destacar. Nunca olvides todo lo bueno que hay en ti."
+    },
+    {
+        icon: "🎀",
+        title: "Su estilo",
+        text: "Tu forma de expresarte y mostrar tu personalidad hace que tengas una esencia propia."
+    },
+    {
+        icon: "🌸",
+        title: "Su sensibilidad",
+        text: "Sentir, comprender y valorar los pequeños detalles también son formas muy bonitas de ser."
+    },
+    {
+        icon: "☀️",
+        title: "Su energía",
+        text: "Hay personas que hacen más agradables los momentos que comparten. Espero que nunca te falten motivos para disfrutar."
+    },
+    {
+        icon: "📖",
+        title: "Sus aprendizajes",
+        text: "Cada experiencia deja algo que enseñar. Sigue creciendo, descubriendo y aprendiendo a tu propio ritmo."
+    },
+    {
+        icon: "🧸",
+        title: "Su ternura",
+        text: "A veces los detalles más pequeños son los que más bonito hacen sentir a quienes te rodean."
+    },
+    {
+        icon: "🌈",
+        title: "Su optimismo",
+        text: "Incluso los días difíciles pueden traer nuevas oportunidades. Que siempre encuentres razones para mirar hacia adelante."
+    },
+    {
+        icon: "💫",
+        title: "Sus sueños",
+        text: "Que nunca te falten ilusiones por cumplir ni ganas de descubrir todo lo que la vida tiene preparado."
+    },
+    {
+        icon: "🐱",
+        title: "Su lado divertido",
+        text: "Nunca pierdas esa capacidad de disfrutar las pequeñas cosas y encontrar diversión en los momentos cotidianos."
+    },
+    {
+        icon: "💐",
+        title: "Su crecimiento",
+        text: "Mira todo lo que has aprendido y lo que todavía puedes descubrir. Cada etapa tiene algo bonito que ofrecer."
+    },
+    {
+        icon: "💌",
+        title: "Su esencia",
+        text: "Hay cosas que no necesitan explicación: simplemente hacen especial a una persona. Tu esencia es una de ellas."
     }
 ];
+
 
 // Sección de gatitos
 export const catsData = [
@@ -77,6 +149,7 @@ export const catsData = [
     }
 ];
 
+
 // Contenido de la carta
 export const letterData = {
     title: "Unas palabras para ti",
@@ -88,6 +161,7 @@ export const letterData = {
     ],
     closing: "Con mucho aprecio ♡"
 };
+
 
 // Mensajes sorpresa
 export const surprisesData = [
@@ -113,6 +187,7 @@ export const surprisesData = [
     }
 ];
 
+
 // Mensajes que aparecen al interactuar con la página
 export const hiddenMessages = [
     "¡Encontraste un pequeño secreto! ♡",
@@ -121,6 +196,7 @@ export const hiddenMessages = [
     "Este detalle es pequeño, pero está hecho con dedicación. 💗",
     "¡Sigue explorando! Todavía quedan cositas por descubrir. ☆"
 ];
+
 
 // Contenido especial del cumpleaños
 export const birthdayData = {

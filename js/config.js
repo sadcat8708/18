@@ -11,9 +11,9 @@ export const CONFIG = {
 
     // Fecha del cumpleaños
     birthday: {
-        year: 2026,
-        month: 10, // Enero: 0, febrero: 1...
-        day: 16,
+        year: 2027,
+        month: 0, // Enero: 0, febrero: 1...
+        day: 20,
 
         // Hora de desbloqueo
         hour: 0,

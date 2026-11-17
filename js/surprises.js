@@ -30,6 +30,10 @@ function createMessageContainer() {
  * Selecciona un mensaje aleatorio.
  */
 function getRandomMessage() {
+    if (!Array.isArray(hiddenMessages) || hiddenMessages.length === 0) {
+        return "¡Has descubierto un pequeño secreto de ALEXA 18! ♡";
+    }
+
     const index = Math.floor(
         Math.random() * hiddenMessages.length
     );
@@ -43,7 +47,7 @@ function getRandomMessage() {
 export function showSecretMessage(message = getRandomMessage()) {
     const container = createMessageContainer();
 
-    container.textContent = message;
+    container.textContent = message || getRandomMessage();
     container.classList.add("visible");
 
     if (messageTimeout !== null) {
@@ -61,15 +65,20 @@ export function showSecretMessage(message = getRandomMessage()) {
  */
 function initDecorationSecrets() {
     const decorations = document.querySelectorAll(
-        ".heart-decoration, .flower-decoration, .background-decoration"
+        ".heart-decoration, .flower-decoration, .star-decoration"
     );
 
     decorations.forEach(decoration => {
+        if (decoration.dataset.secretInitialized === "true") {
+            return;
+        }
+
+        decoration.dataset.secretInitialized = "true";
+
         decoration.addEventListener("click", () => {
             showSecretMessage();
         });
 
-        // Permitir interacción mediante teclado
         decoration.setAttribute("tabindex", "0");
         decoration.setAttribute("role", "button");
         decoration.setAttribute(
@@ -87,13 +96,27 @@ function initDecorationSecrets() {
 }
 
 /**
- * Activa los secretos de elementos marcados
- * con el atributo data-secret.
+ * Activa los secretos personalizados.
  */
 function initCustomSecrets() {
     const secretElements = document.querySelectorAll("[data-secret]");
 
     secretElements.forEach(element => {
+        if (element.dataset.secretInitialized === "true") {
+            return;
+        }
+
+        element.dataset.secretInitialized = "true";
+
+        const isInteractive = element.matches(
+            "button, a, input, select, textarea"
+        );
+
+        if (!isInteractive) {
+            element.setAttribute("tabindex", "0");
+            element.setAttribute("role", "button");
+        }
+
         element.addEventListener("click", () => {
             const customMessage = element.dataset.secret;
 
@@ -101,6 +124,20 @@ function initCustomSecrets() {
                 customMessage || getRandomMessage()
             );
         });
+
+        if (!isInteractive) {
+            element.addEventListener("keydown", event => {
+                if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+
+                    const customMessage = element.dataset.secret;
+
+                    showSecretMessage(
+                        customMessage || getRandomMessage()
+                    );
+                }
+            });
+        }
     });
 }
 

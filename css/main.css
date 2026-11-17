@@ -771,3 +771,211 @@ p {
         padding: 22px 15px;
     }
 }
+
+/* =========================================
+   ALEXA 18 — MEJORA DEL DIARIO DIGITAL
+========================================= */
+
+/* Contenedor de los recuerdos */
+#story-container {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    width: 100%;
+    margin: 25px auto;
+    text-align: left;
+}
+
+/* Cada recuerdo como una página independiente */
+#story-container .journal-page {
+    position: relative;
+    width: 100%;
+    min-height: 220px;
+    padding: 35px 30px 35px 55px;
+    overflow: hidden;
+    background: linear-gradient(
+        145deg,
+        #FFFCF7,
+        #FFF7ED
+    );
+    border: 1px solid #EAD8C8;
+    border-radius: 8px 20px 20px 8px;
+    box-shadow: 0 5px 18px rgba(95, 65, 57, 0.07);
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}
+
+/* Efecto al pasar el cursor */
+#story-container .journal-page:hover {
+    transform: translateY(-4px);
+    border-color: var(--dusty-pink);
+    box-shadow: 0 10px 25px rgba(95, 65, 57, 0.12);
+}
+
+/* Fecha del recuerdo */
+#story-container .journal-date {
+    margin-bottom: 10px;
+    color: var(--accent-dark);
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+/* Título */
+#story-container .journal-title {
+    margin-bottom: 18px;
+    color: var(--brown-dark);
+    font-family: var(--font-heading);
+    font-size: 24px;
+}
+
+/* Descripción */
+#story-container .journal-text {
+    color: var(--text-soft);
+    font-size: 14px;
+    line-height: 2;
+}
+
+/* Número de cada recuerdo */
+#story-container .journal-number {
+    display: block;
+    margin-top: 15px;
+    color: var(--old-rose);
+    font-family: var(--font-heading);
+    font-size: 13px;
+    text-align: right;
+}
+
+/* Decoración lateral del diario */
+#story-container .journal-page::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 27px;
+    width: 1px;
+    background: rgba(201, 155, 145, 0.3);
+    content: "";
+}
+
+/* Adaptación a celulares */
+@media (max-width: 650px) {
+    #story-container {
+        gap: 16px;
+    }
+
+    #story-container .journal-page {
+        min-height: auto;
+        padding: 28px 20px 28px 43px;
+    }
+
+    #story-container .journal-page::before {
+        left: 22px;
+    }
+
+    #story-container .journal-title {
+        font-size: 21px;
+    }
+
+    #story-container .journal-text {
+        font-size: 13px;
+    }
+}
+
+/* Accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+    #story-container .journal-page {
+        transition: none;
+    }
+
+    #story-container .journal-page:hover {
+        transform: none;
+    }
+}
+
+/* =========================================
+   ALEXA 18 — LÍNEA DE TIEMPO DE RECUERDOS
+========================================= */
+
+#story-container {
+    position: relative;
+}
+
+/* Línea que conecta los recuerdos */
+#story-container::before {
+    position: absolute;
+    top: 25px;
+    bottom: 25px;
+    left: 17px;
+    width: 2px;
+    background: linear-gradient(
+        to bottom,
+        #E8B9C2,
+        #D9B59E,
+        #E8B9C2
+    );
+    content: "";
+}
+
+/* Espacio para los corazones */
+#story-container .journal-page {
+    padding-left: 55px;
+}
+
+/* Corazón decorativo de cada recuerdo */
+#story-container .journal-page::after {
+    position: absolute;
+    top: 35px;
+    left: 7px;
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    color: #C77F91;
+    background: #FFF8F3;
+    border: 1px solid #E8B9C2;
+    border-radius: 50%;
+    font-size: 13px;
+    content: "♡";
+    z-index: 2;
+}
+
+/* Evitar que las antiguas líneas laterales interfieran */
+#story-container .journal-page::before {
+    display: none;
+}
+
+/* Pequeño efecto al pasar el cursor */
+#story-container .journal-page:hover::after {
+    color: #FFFFFF;
+    background: #C77F91;
+    transform: scale(1.12);
+    transition: 0.3s ease;
+}
+
+/* Adaptación para celulares */
+@media (max-width: 650px) {
+    #story-container::before {
+        left: 12px;
+    }
+
+    #story-container .journal-page {
+        padding-left: 43px;
+    }
+
+    #story-container .journal-page::after {
+        left: 2px;
+    }
+}
+
+/* Accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+    #story-container .journal-page:hover::after {
+        transform: none;
+        transition: none;
+    }
+}
+/* Evitar corazones duplicados en la línea de tiempo */
+#story-container .journal-decoration {
+    display: none;
+}

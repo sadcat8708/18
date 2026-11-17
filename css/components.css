@@ -46,11 +46,7 @@
     gap: 12px;
     min-height: 190px;
     padding: 25px;
-    background: linear-gradient(
-        145deg,
-        #FFFCF8,
-        #F9EAE6
-    );
+    background: linear-gradient(145deg, #FFFCF8, #F9EAE6);
     border: 1px solid var(--dusty-pink);
     border-radius: var(--radius-medium);
     transition:
@@ -93,11 +89,7 @@
     align-items: center;
     padding: 18px;
     overflow: hidden;
-    background: linear-gradient(
-        160deg,
-        #FFFCF8,
-        #FFF0F0
-    );
+    background: linear-gradient(160deg, #FFFCF8, #FFF0F0);
     border: 1px solid var(--dusty-pink);
     border-radius: 22px;
     box-shadow: var(--shadow-soft);
@@ -184,7 +176,9 @@
     margin-top: auto;
 }
 
-/* SORPRESA DE GATITOS */
+/* =========================================
+   SORPRESA DE GATITOS
+========================================= */
 
 .cat-surprise {
     position: relative;
@@ -211,7 +205,111 @@
     color: var(--text-soft);
 }
 
-/* DIARIO DIGITAL */
+/* =========================================
+   NUEVO DISEÑO DE MENSAJES DE GATITOS
+========================================= */
+
+#cat-surprise-message {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    max-width: 600px;
+    min-height: 130px;
+    margin: 20px auto;
+    padding: 25px 20px;
+    overflow: hidden;
+    background: linear-gradient(
+        145deg,
+        #FFFCF8,
+        #FCE5E9
+    );
+    border: 1px solid #E8B9C2;
+    border-radius: 22px;
+    box-shadow: 0 8px 25px rgba(150, 85, 95, 0.12);
+    text-align: center;
+}
+
+/* TEXTO DEL MENSAJE */
+
+.cat-message-text {
+    margin: 0 !important;
+    color: var(--brown-dark) !important;
+    font-family: var(--font-heading);
+    font-size: 20px;
+    line-height: 1.8;
+}
+
+/* CORAZONES */
+
+.cat-message-hearts {
+    display: block;
+    color: #D98B9C;
+    font-size: 22px;
+    letter-spacing: 9px;
+    animation: catHeartFloat 2s ease-in-out infinite;
+}
+
+/* DESTELLOS */
+
+.cat-message-sparkles {
+    display: block;
+    color: #B98779;
+    font-size: 21px;
+    letter-spacing: 10px;
+    animation: catSparkle 2.5s ease-in-out infinite;
+}
+
+/* ANIMACIÓN DE APARICIÓN */
+
+.cat-message-animation {
+    animation: catMessageAppear 0.65s ease both;
+}
+
+@keyframes catMessageAppear {
+    0% {
+        opacity: 0;
+        transform: translateY(18px) scale(0.94);
+    }
+
+    70% {
+        opacity: 1;
+        transform: translateY(-3px) scale(1.015);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes catHeartFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes catSparkle {
+    0%, 100% {
+        opacity: 0.65;
+        transform: scale(0.95);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+}
+
+/* =========================================
+   DIARIO DIGITAL
+========================================= */
 
 .journal-page {
     position: relative;
@@ -246,7 +344,9 @@
     color: var(--brown-light);
 }
 
-/* CARTA Y SOBRE */
+/* =========================================
+   CARTA Y SOBRE
+========================================= */
 
 .letter-container {
     position: relative;
@@ -301,7 +401,9 @@
     text-align: right;
 }
 
-/* MENSAJES SORPRESA */
+/* =========================================
+   MENSAJES SORPRESA
+========================================= */
 
 .surprises-container {
     display: grid;
@@ -328,7 +430,9 @@
     font-size: 13px;
 }
 
-/* DECORACIONES */
+/* =========================================
+   DECORACIONES
+========================================= */
 
 .decoration {
     color: var(--old-rose);
@@ -343,7 +447,9 @@
     color: var(--brown-light);
 }
 
-/* MENSAJES DESTACADOS */
+/* =========================================
+   MENSAJES DESTACADOS
+========================================= */
 
 .message-box {
     padding: 22px;
@@ -355,7 +461,9 @@
     text-align: left;
 }
 
-/* ELEMENTOS DE CUMPLEAÑOS */
+/* =========================================
+   ELEMENTOS DE CUMPLEAÑOS
+========================================= */
 
 .birthday-decoration {
     color: var(--old-rose);
@@ -365,14 +473,18 @@
     border: 1px solid var(--cream-dark);
 }
 
-/* ESTADOS DE INTERACCIÓN */
+/* =========================================
+   ESTADOS DE INTERACCIÓN
+========================================= */
 
 .card:focus-within,
 .cat-card:focus-within {
     border-color: var(--accent-color);
 }
 
-/* ACCESIBILIDAD */
+/* =========================================
+   ACCESIBILIDAD
+========================================= */
 
 @media (prefers-reduced-motion: reduce) {
     .card,
@@ -392,9 +504,17 @@
     .cat-card:hover .cat-image {
         transform: none;
     }
+
+    .cat-message-animation,
+    .cat-message-hearts,
+    .cat-message-sparkles {
+        animation: none;
+    }
 }
 
-/* RESPONSIVE */
+/* =========================================
+   RESPONSIVE
+========================================= */
 
 @media (max-width: 650px) {
     .surprises-container {
@@ -420,5 +540,294 @@
 
     .letter-paper {
         padding: 25px 18px;
+    }
+
+    #cat-surprise-message {
+        min-height: 115px;
+        padding: 22px 15px;
+    }
+
+    .cat-message-text {
+        font-size: 18px;
+    }
+}
+
+/* =========================================
+   ALEXA 18 — ANIMACIONES DE LOS DETALLES
+========================================= */
+
+/* Preparación de las tarjetas */
+.detail-card {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    animation: detailCardAppear 0.7s ease both;
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease,
+        border-color 0.35s ease;
+}
+
+/* Aparición escalonada */
+.detail-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.detail-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.detail-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.detail-card:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+/* Movimiento de las tarjetas */
+.detail-card:hover {
+    transform: translateY(-7px);
+    border-color: var(--accent-color);
+    box-shadow: var(--shadow-medium);
+}
+
+/* Iconos */
+.detail-icon {
+    position: relative;
+    z-index: 1;
+    transition:
+        transform 0.4s ease,
+        background-color 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+/* Movimiento del icono */
+.detail-card:hover .detail-icon {
+    transform: translateY(-4px) rotate(-8deg) scale(1.08);
+    background: #F5D9DD;
+    box-shadow: 0 5px 15px rgba(150, 85, 95, 0.15);
+}
+
+/* Destello decorativo */
+.detail-icon::after {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    color: var(--old-rose);
+    font-size: 14px;
+    opacity: 0;
+    content: "✧";
+    transform: scale(0.5) rotate(-30deg);
+    transition:
+        opacity 0.35s ease,
+        transform 0.35s ease;
+}
+
+.detail-card:hover .detail-icon::after {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+}
+
+/* Animación de entrada */
+@keyframes detailCardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(22px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+    .detail-card {
+        animation: none;
+        transition: none;
+    }
+
+    .detail-card:hover,
+    .detail-card:hover .detail-icon {
+        transform: none;
+    }
+
+    .detail-icon,
+    .detail-icon::after {
+        transition: none;
+    }
+}
+
+/* =========================================
+   ALEXA 18 — APERTURA ANIMADA DE LA CARTA
+========================================= */
+
+/* Corazón del sobre */
+.envelope-decoration {
+    display: inline-block;
+    animation: letterHeart 2.5s ease-in-out infinite;
+    transform-origin: center;
+}
+
+/* Efecto al pasar el cursor por el sobre */
+.letter-envelope:hover .envelope-decoration {
+    transform: scale(1.15);
+}
+
+/* Aparición del papel */
+#letter-paper:not([hidden]) {
+    animation: letterPaperOpen 0.85s ease both;
+    transform-origin: top center;
+}
+
+/* Animación del contenido */
+#letter-content {
+    animation: letterContentAppear 0.9s ease both;
+    animation-delay: 0.2s;
+}
+
+/* Animación del corazón */
+@keyframes letterHeart {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.12);
+    }
+}
+
+/* Animación de apertura */
+@keyframes letterPaperOpen {
+    0% {
+        opacity: 0;
+        transform: translateY(-25px) scaleY(0.92);
+    }
+
+    70% {
+        opacity: 1;
+        transform: translateY(5px) scaleY(1.01);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scaleY(1);
+    }
+}
+
+/* Aparición del texto */
+@keyframes letterContentAppear {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+    .envelope-decoration,
+    #letter-paper:not([hidden]),
+    #letter-content {
+        animation: none;
+    }
+}
+
+/* =========================================
+   ALEXA 18 — MENSAJES SECRETOS
+========================================= */
+
+.secret-message {
+    position: fixed;
+    left: 50%;
+    bottom: 35px;
+    z-index: 9999;
+
+    width: max-content;
+    max-width: min(90%, 420px);
+
+    padding: 18px 25px;
+
+    color: var(--brown-dark);
+    background: linear-gradient(145deg, #FFFCF8, #F9E2E7);
+
+    border: 1px solid var(--dusty-pink);
+    border-radius: 20px;
+
+    box-shadow: 0 8px 30px rgba(150, 85, 95, 0.18);
+
+    font-family: var(--font-heading);
+    font-size: 17px;
+    line-height: 1.6;
+    text-align: center;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transform: translate(-50%, 20px) scale(0.95);
+
+    transition:
+        opacity 0.4s ease,
+        visibility 0.4s ease,
+        transform 0.4s ease;
+}
+
+/* Cuando aparece el mensaje */
+.secret-message.visible {
+    opacity: 1;
+    visibility: visible;
+
+    transform: translate(-50%, 0) scale(1);
+}
+
+/* Elementos secretos interactivos */
+.flower-decoration,
+.heart-decoration,
+.star-decoration {
+    cursor: pointer;
+    pointer-events: auto;
+
+    transition:
+        transform 0.3s ease,
+        color 0.3s ease;
+}
+
+.flower-decoration:hover,
+.heart-decoration:hover,
+.star-decoration:hover {
+    color: var(--accent-dark);
+    transform: scale(1.2) rotate(8deg);
+}
+
+/* Accesibilidad */
+.flower-decoration:focus-visible,
+.heart-decoration:focus-visible,
+.star-decoration:focus-visible {
+    outline: 2px solid var(--accent-dark);
+    outline-offset: 5px;
+    border-radius: 5px;
+}
+
+@media (max-width: 650px) {
+    .secret-message {
+        bottom: 20px;
+        padding: 15px 20px;
+        font-size: 15px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .secret-message,
+    .flower-decoration,
+    .heart-decoration,
+    .star-decoration {
+        transition: none;
     }
 }

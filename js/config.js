@@ -11,9 +11,9 @@ export const CONFIG = {
 
     // Fecha del cumpleaños
     birthday: {
-        year: 2027,
-        month: 0, // Enero: 0, febrero: 1...
-        day: 20,
+        year: 2026,
+        month: 10, // Enero: 0, febrero: 1...
+        day: 16,
 
         // Hora de desbloqueo
         hour: 0,
@@ -21,7 +21,7 @@ export const CONFIG = {
         second: 0
     },
 
-    // Colombia utiliza UTC-5
+    // Zona horaria de Colombia
     timezone: "America/Bogota",
     utcOffset: "-05:00",
 
@@ -37,12 +37,40 @@ export const CONFIG = {
     }
 };
 
-// Fecha exacta de desbloqueo en hora de Bogotá
+/**
+ * Construye la fecha exacta de desbloqueo.
+ * El mes de JavaScript comienza en 0, por eso sumamos 1.
+ */
+const birthdayYear = CONFIG.birthday.year;
+
+const birthdayMonth = String(
+    CONFIG.birthday.month + 1
+).padStart(2, "0");
+
+const birthdayDay = String(
+    CONFIG.birthday.day
+).padStart(2, "0");
+
+const birthdayHour = String(
+    CONFIG.birthday.hour
+).padStart(2, "0");
+
+const birthdayMinute = String(
+    CONFIG.birthday.minute
+).padStart(2, "0");
+
+const birthdaySecond = String(
+    CONFIG.birthday.second
+).padStart(2, "0");
+
+// Fecha exacta en hora de Bogotá
 export const BIRTHDAY_DATE = new Date(
-    `${CONFIG.birthday.year}-01-${String(CONFIG.birthday.day).padStart(2, "0")}T00:00:00${CONFIG.utcOffset}`
+    `${birthdayYear}-${birthdayMonth}-${birthdayDay}T${birthdayHour}:${birthdayMinute}:${birthdaySecond}${CONFIG.utcOffset}`
 );
 
-// Comprobar si ya llegó el cumpleaños
+/**
+ * Comprueba si ya llegó el cumpleaños.
+ */
 export function isBirthdayUnlocked() {
     return Date.now() >= BIRTHDAY_DATE.getTime();
 }

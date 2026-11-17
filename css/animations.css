@@ -135,6 +135,17 @@
     animation: pulseSoft 3s ease-in-out infinite;
 }
 
+/* Permitir que las decoraciones respondan al cursor */
+
+.flower-decoration:hover,
+.heart-decoration:hover,
+.star-decoration:hover,
+.flower-decoration:focus-visible,
+.heart-decoration:focus-visible,
+.star-decoration:focus-visible {
+    animation-play-state: paused;
+}
+
 /* =========================================
    DECORACIONES DEL FONDO
 ========================================= */
@@ -176,24 +187,6 @@
 
 .scene:not([hidden]) .scene-content {
     animation: fadeUp 0.65s ease both;
-}
-
-/* =========================================
-   TARJETAS
-========================================= */
-
-.detail-card,
-.cat-card,
-.surprise-card {
-    transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
-}
-
-.detail-card:hover,
-.cat-card:hover,
-.surprise-card:hover {
-    transform: translateY(-5px);
 }
 
 /* =========================================

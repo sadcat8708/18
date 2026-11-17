@@ -45,23 +45,9 @@ function renderHistory() {
             story.decoration
         );
 
-        const date = createElement(
-            "p",
-            "journal-date",
-            story.date
-        );
-
-        const title = createElement(
-            "h3",
-            "journal-title",
-            story.title
-        );
-
-        const text = createElement(
-            "p",
-            "journal-text",
-            story.text
-        );
+        const date = createElement("p", "journal-date", story.date);
+        const title = createElement("h3", "journal-title", story.title);
+        const text = createElement("p", "journal-text", story.text);
 
         const number = createElement(
             "span",
@@ -69,14 +55,7 @@ function renderHistory() {
             `0${index + 1}`
         );
 
-        card.append(
-            decoration,
-            date,
-            title,
-            text,
-            number
-        );
-
+        card.append(decoration, date, title, text, number);
         container.appendChild(card);
     });
 }
@@ -94,23 +73,9 @@ function renderDetails() {
     detailsData.forEach(detail => {
         const card = createElement("article", "detail-card");
 
-        const icon = createElement(
-            "span",
-            "detail-icon",
-            detail.icon
-        );
-
-        const title = createElement(
-            "h3",
-            "detail-title",
-            detail.title
-        );
-
-        const text = createElement(
-            "p",
-            "detail-text",
-            detail.text
-        );
+        const icon = createElement("span", "detail-icon", detail.icon);
+        const title = createElement("h3", "detail-title", detail.title);
+        const text = createElement("p", "detail-text", detail.text);
 
         card.append(icon, title, text);
         container.appendChild(card);
@@ -130,13 +95,11 @@ function renderCats() {
     catsData.forEach(cat => {
         const card = createElement("article", "cat-card");
 
-        // Contenedor de la ilustración
         const imageContainer = createElement(
             "div",
             "cat-image-container"
         );
 
-        // Imagen individual del gatito
         const image = document.createElement("img");
 
         image.className = "cat-image";
@@ -144,7 +107,6 @@ function renderCats() {
         image.alt = cat.name;
         image.loading = "lazy";
 
-        // Evita mostrar una imagen rota si falta el archivo
         image.addEventListener("error", () => {
             image.alt = `No se pudo cargar la ilustración de ${cat.name}`;
             image.classList.add("cat-image-error");
@@ -152,21 +114,14 @@ function renderCats() {
 
         imageContainer.appendChild(image);
 
-        // Nombre del gatito
-        const name = createElement(
-            "h3",
-            "cat-name",
-            cat.name
-        );
+        const name = createElement("h3", "cat-name", cat.name);
 
-        // Descripción
         const description = createElement(
             "p",
             "cat-description",
             cat.description
         );
 
-        // Botón para leer el mensaje
         const messageButton = createElement(
             "button",
             "secondary-button cat-message-button",
@@ -191,7 +146,7 @@ function renderCats() {
 }
 
 /**
- * Muestra un mensaje de gatito.
+ * Construye y muestra el mensaje animado de un gatito.
  */
 function showCatMessage(message) {
     const surprise = document.getElementById("cat-surprise");
@@ -202,9 +157,46 @@ function showCatMessage(message) {
 
     if (!surprise || !messageContainer) return;
 
-    messageContainer.textContent = message;
+    // Decoración superior
+    const hearts = createElement(
+        "span",
+        "cat-message-hearts",
+        "♡  ♥  ♡"
+    );
+
+    // Texto del mensaje
+    const messageText = createElement(
+        "p",
+        "cat-message-text",
+        message
+    );
+
+    // Destellos inferiores
+    const sparkles = createElement(
+        "span",
+        "cat-message-sparkles",
+        "✧  ✦  ✧"
+    );
+
+    // Construir el contenido
+    messageContainer.replaceChildren(
+        hearts,
+        messageText,
+        sparkles
+    );
+
+    // Reiniciar la animación si ya se había mostrado
+    messageContainer.classList.remove("cat-message-animation");
+
+    // Forzar actualización visual para reiniciar la animación
+    void messageContainer.offsetWidth;
+
+    messageContainer.classList.add("cat-message-animation");
+
+    // Mostrar la sorpresa
     surprise.hidden = false;
 
+    // Desplazarse suavemente hasta el mensaje
     surprise.scrollIntoView({
         behavior: "smooth",
         block: "nearest"
@@ -212,7 +204,7 @@ function showCatMessage(message) {
 }
 
 /**
- * Prepara el botón de sorpresa de los gatitos.
+ * Prepara el botón de sorpresa aleatoria de los gatitos.
  */
 function initCatSurprise() {
     const button = document.querySelector("[data-surprise]");
@@ -220,20 +212,13 @@ function initCatSurprise() {
     if (!button) return;
 
     button.addEventListener("click", () => {
+        if (!hiddenMessages.length) return;
+
         const randomIndex = Math.floor(
             Math.random() * hiddenMessages.length
         );
 
-        const surprise = document.getElementById("cat-surprise");
-
-        const messageContainer = document.getElementById(
-            "cat-surprise-message"
-        );
-
-        if (!surprise || !messageContainer) return;
-
-        messageContainer.textContent = hiddenMessages[randomIndex];
-        surprise.hidden = false;
+        showCatMessage(hiddenMessages[randomIndex]);
     });
 }
 

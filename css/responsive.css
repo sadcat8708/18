@@ -267,3 +267,22 @@
         font-size: 4.5rem;
     }
 }
+/* Evitar desbordamientos en dispositivos pequeños */
+@media (max-width: 650px) {
+    img,
+    video,
+    canvas {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .scene,
+    .scene-content,
+    .home-content {
+        min-width: 0;
+    }
+
+    button {
+        touch-action: manipulation;
+    }
+}

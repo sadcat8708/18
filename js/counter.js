@@ -3,7 +3,10 @@
    ALEXA 18 — CUENTA REGRESIVA
    ========================================= */
 
-import { BIRTHDAY_DATE, isBirthdayUnlocked } from "./config.js";
+import {
+    BIRTHDAY_DATE,
+    isBirthdayUnlocked
+} from "./config.js";
 
 let counterInterval = null;
 
@@ -66,6 +69,19 @@ export function updateCounter() {
 }
 
 /**
+ * Comprueba el contador al volver a la pestaña.
+ */
+function handleCounterVisibility() {
+    if (!document.hidden) {
+        updateCounter();
+
+        if (isBirthdayUnlocked()) {
+            stopCounter();
+        }
+    }
+}
+
+/**
  * Detiene el contador.
  */
 export function stopCounter() {
@@ -83,7 +99,20 @@ export function initCounter() {
 
     updateCounter();
 
+    document.removeEventListener(
+        "visibilitychange",
+        handleCounterVisibility
+    );
+
+    document.addEventListener(
+        "visibilitychange",
+        handleCounterVisibility
+    );
+
     if (!isBirthdayUnlocked()) {
-        counterInterval = setInterval(updateCounter, 1000);
+        counterInterval = setInterval(
+            updateCounter,
+            1000
+        );
     }
 }

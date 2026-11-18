@@ -1,7 +1,7 @@
 
 /* =========================================
    ALEXA 18 — CONFIGURACIÓN GENERAL
-   ========================================= */
+========================================= */
 
 export const CONFIG = {
     // Información principal
@@ -21,9 +21,8 @@ export const CONFIG = {
         second: 0
     },
 
-    // Zona horaria de Colombia
+    // Zona horaria
     timezone: "America/Bogota",
-    utcOffset: "-05:00",
 
     // Configuración de navegación
     defaultSection: "inicio",
@@ -38,34 +37,69 @@ export const CONFIG = {
 };
 
 /**
- * Construye la fecha exacta de desbloqueo.
- * El mes de JavaScript comienza en 0, por eso sumamos 1.
+ * Convierte una fecha de Bogotá a su instante UTC.
  */
-const birthdayYear = CONFIG.birthday.year;
+function createBogotaDate(year, month, day, hour, minute, second) {
+    const formatter = new Intl.DateTimeFormat("en-GB", {
+        timeZone: CONFIG.timezone,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hourCycle: "h23"
+    });
 
-const birthdayMonth = String(
-    CONFIG.birthday.month + 1
-).padStart(2, "0");
+    // Crear una fecha inicial usando los componentes locales.
+    const initialDate = new Date(Date.UTC(
+        year,
+        month,
+        day,
+        hour,
+        minute,
+        second
+    ));
 
-const birthdayDay = String(
-    CONFIG.birthday.day
-).padStart(2, "0");
+    // Obtener la representación de esa fecha en Bogotá.
+    const parts = formatter.formatToParts(initialDate);
 
-const birthdayHour = String(
-    CONFIG.birthday.hour
-).padStart(2, "0");
+    const values = {};
 
-const birthdayMinute = String(
-    CONFIG.birthday.minute
-).padStart(2, "0");
+    parts.forEach(part => {
+        if (part.type !== "literal") {
+            values[part.type] = Number(part.value);
+        }
+    });
 
-const birthdaySecond = String(
+    // Diferencia entre la hora de Bogotá y UTC.
+    const bogotaAsUTC = Date.UTC(
+        values.year,
+        values.month - 1,
+        values.day,
+        values.hour,
+        values.minute,
+        values.second
+    );
+
+    return new Date(
+        initialDate.getTime() + (Date.UTC(
+            year, month, day, hour, minute, second
+        ) - bogotaAsUTC)
+    );
+}
+
+/**
+ * Fecha exacta de desbloqueo:
+ * 20 de enero de 2027 a las 00:00 en Bogotá.
+ */
+export const BIRTHDAY_DATE = createBogotaDate(
+    CONFIG.birthday.year,
+    CONFIG.birthday.month,
+    CONFIG.birthday.day,
+    CONFIG.birthday.hour,
+    CONFIG.birthday.minute,
     CONFIG.birthday.second
-).padStart(2, "0");
-
-// Fecha exacta en hora de Bogotá
-export const BIRTHDAY_DATE = new Date(
-    `${birthdayYear}-${birthdayMonth}-${birthdayDay}T${birthdayHour}:${birthdayMinute}:${birthdaySecond}${CONFIG.utcOffset}`
 );
 
 /**

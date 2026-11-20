@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/pet.css">
     <link rel="stylesheet" href="css/responsive.css">
 </head>
 
@@ -104,21 +105,21 @@
     <main class="main-content">
 
         <!-- BOTÓN DEL MENÚ MÓVIL -->
-          <header class="mobile-header">
+        <header class="mobile-header">
             <button
-              class="menu-toggle"
-              id="menu-toggle"
-              type="button"
-              aria-label="Abrir menú"
-              aria-expanded="false"
-              aria-controls="sidebar"
+                class="menu-toggle"
+                id="menu-toggle"
+                type="button"
+                aria-label="Abrir menú"
+                aria-expanded="false"
+                aria-controls="sidebar"
             >
-           ☰
-           </button>
+                ☰
+            </button>
 
-           <span class="mobile-header-title">
-              ALEXA <small>18</small>
-           </span>
+            <span class="mobile-header-title">
+                ALEXA <small>18</small>
+            </span>
         </header>
 
         <!-- ==================================
@@ -492,6 +493,43 @@
         ></div>
 
     </main>
+
+    <!-- ==================================
+         MICHI - MASCOTA VIRTUAL
+    =================================== -->
+    <div
+        class="michi-pet"
+        id="michi-pet"
+        data-section="inicio"
+    >
+
+        <!-- GLOBO DE MENSAJES -->
+        <div
+            class="michi-pet__bubble"
+            id="michi-message"
+            role="status"
+            aria-live="polite"
+        >
+            ¡Hola! Soy Michi y te acompaño en este recorrido ♡
+        </div>
+
+        <!-- BOTÓN INTERACTIVO -->
+        <button
+            class="michi-pet__button"
+            id="michi-button"
+            type="button"
+            aria-label="Interactuar con Michi, el gatito acompañante"
+            aria-controls="michi-message"
+        >
+            <img
+                class="michi-pet__image"
+                src="assets/illustrations/michi.png"
+                alt=""
+                draggable="false"
+            >
+        </button>
+
+    </div>
 
     <!-- JAVASCRIPT -->
     <script type="module" src="js/main.js"></script>

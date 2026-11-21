@@ -25,6 +25,10 @@ import {
     initSurprises
 } from "./surprises.js";
 
+import {
+    initPet
+} from "./pet.js";
+
 /**
  * Inicializa todos los sistemas de la página.
  */
@@ -48,6 +52,9 @@ function initApp() {
 
     // 6. Activar los mensajes secretos
     initSurprises();
+
+    // 7. Inicializar a Michi, el gatito acompañante
+    initPet();
 
     console.log("ALEXA 18: página iniciada correctamente ♡");
 }

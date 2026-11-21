@@ -1,71 +1,74 @@
 
 /* =========================================
-   ALEXA 18 - MICHI, MASCOTA VIRTUAL
-   Control de interacciones y comportamiento
-========================================= */
+   ALEXA 18 — MICHI, GATITO ACOMPAÑANTE
+   ========================================= */
 
-const michiMessages = {
-    inicio: [
-        "¡Hola! Soy Michi y te acompaño en este recorrido ♡",
-        "¡Bienvenida! Espero que disfrutes este pequeño diario.",
-        "¡Miau! Tenemos muchas cositas por descubrir."
-    ],
+const michiReactions = {
+    inicio: {
+        mood: "is-happy",
+        messages: [
+            "¡Hola! Soy Michi. ¡Bienvenida! ♡",
+            "¡Miau! Qué alegría tenerte aquí.",
+            "¡Vamos a descubrir este pequeño universo!"
+        ]
+    },
 
-    historia: [
-        "¡Qué bonitos recuerdos! ♡",
-        "Las pequeñas historias también son especiales.",
-        "Cada recuerdo merece un lugarcito."
-    ],
+    historia: {
+        mood: "is-curious",
+        messages: [
+            "¡Qué bonitos recuerdos! ♡",
+            "Me pregunto qué historia viene ahora...",
+            "Las pequeñas historias también son especiales."
+        ]
+    },
 
-    explora: [
-        "¡Vamos a descubrir los 18 detalles!",
-        "Cada persona tiene algo que la hace especial.",
-        "¡Miau! ¿Cuál será tu detalle favorito?"
-    ],
+    explora: {
+        mood: "is-happy",
+        messages: [
+            "¡Vamos a descubrir los 18 detalles!",
+            "¡Cada detalle es una pequeña sorpresa!",
+            "¿Cuál será tu favorito?"
+        ]
+    },
 
-    gatitos: [
-        "¡Este es mi lugar favorito! 🐾",
-        "¡Más gatitos, más felicidad!",
-        "Un poquito de ternura nunca está de más."
-    ],
+    gatitos: {
+        mood: "is-happy",
+        messages: [
+            "¡Este es mi lugar favorito! 🐾",
+            "¡Más gatitos, más felicidad!",
+            "¡Miau! ¡Qué bonito es este rincón!"
+        ]
+    },
 
-    carta: [
-        "Las palabras bonitas siempre merecen ser leídas.",
-        "Tengo curiosidad por saber qué dice esa carta.",
-        "¡Espero que te guste este pequeño mensaje!"
-    ],
+    carta: {
+        mood: "is-shy",
+        messages: [
+            "Creo que aquí hay palabras muy bonitas...",
+            "¡Me da curiosidad saber qué dice!",
+            "Las palabras bonitas siempre son especiales. ♡"
+        ]
+    },
 
-    cumpleanos: [
-        "¡Se acerca un día muy especial! 🎂",
-        "¡Miau! Ya casi llega la celebración.",
-        "¡Espero que tengas un cumpleaños maravilloso!"
-    ]
+    cumpleanos: {
+        mood: "is-celebrating",
+        messages: [
+            "¡Feliz cumpleaños, Alexa! 🎂",
+            "¡Hoy es un día para celebrar!",
+            "¡Miauuu! ¡Que tengas un día maravilloso!"
+        ]
+    }
 };
 
-const michiReactions = [
-    {
-        message: "¡Miauuu! Me alegra que me visites. ♡",
-        state: "is-happy"
-    },
-    {
-        message: "¡Hola otra vez! ¿Seguimos explorando?",
-        state: "is-happy"
-    },
-    {
-        message: "¡Qué alegría tenerte por aquí! 🐾",
-        state: "is-happy"
-    },
-    {
-        message: "¡Miau! Te tengo una pequeña sorpresa.",
-        state: "is-surprised"
-    }
+const michiClickMessages = [
+    "¡Miauuu! Me alegra que me visites. ♡",
+    "¡Hola otra vez! ¿Seguimos explorando?",
+    "¡Qué alegría tenerte por aquí! 🐾",
+    "¡Te mando un poquito de ternura!"
 ];
 
 let michiInitialized = false;
-
-/* =========================================
-   OBTENER ELEMENTOS
-========================================= */
+let michiMessageTimeout = null;
+let currentMichiSection = "inicio";
 
 function getMichiElements() {
     return {
@@ -75,9 +78,14 @@ function getMichiElements() {
     };
 }
 
-/* =========================================
-   MOSTRAR MENSAJE
-========================================= */
+function getRandomMessage(messages) {
+    if (!messages || messages.length === 0) {
+        return "¡Miau! ♡";
+    }
+
+    const randomIndex = Math.floor(Math.random() * messages.length);
+    return messages[randomIndex];
+}
 
 function showMichiMessage(message) {
     const { pet, message: messageElement } = getMichiElements();
@@ -85,13 +93,8 @@ function showMichiMessage(message) {
     if (!pet || !messageElement) return;
 
     messageElement.textContent = message;
-
     pet.classList.add("is-talking");
 }
-
-/* =========================================
-   OCULTAR MENSAJE
-========================================= */
 
 function hideMichiMessage() {
     const { pet } = getMichiElements();
@@ -101,10 +104,6 @@ function hideMichiMessage() {
     pet.classList.remove("is-talking");
 }
 
-/* =========================================
-   CAMBIAR ESTADO DE MICHI
-========================================= */
-
 function setMichiState(state) {
     const { pet } = getMichiElements();
 
@@ -113,7 +112,10 @@ function setMichiState(state) {
     pet.classList.remove(
         "is-happy",
         "is-sleeping",
-        "is-surprised"
+        "is-surprised",
+        "is-curious",
+        "is-shy",
+        "is-celebrating"
     );
 
     if (state) {
@@ -121,41 +123,13 @@ function setMichiState(state) {
     }
 }
 
-/* =========================================
-   ELEGIR MENSAJE ALEATORIO
-========================================= */
+function scheduleMichiMessage(duration = 4500) {
+    window.clearTimeout(michiMessageTimeout);
 
-function getRandomMessage(messages) {
-    if (!messages || messages.length === 0) {
-        return "¡Miau! ♡";
-    }
-
-    const randomIndex = Math.floor(
-        Math.random() * messages.length
-    );
-
-    return messages[randomIndex];
+    michiMessageTimeout = window.setTimeout(() => {
+        hideMichiMessage();
+    }, duration);
 }
-
-/* =========================================
-   DETECTAR SECCIÓN ACTUAL
-========================================= */
-
-function getCurrentSection() {
-    const sections = document.querySelectorAll(".scene");
-
-    for (const section of sections) {
-        if (!section.hidden) {
-            return section.id;
-        }
-    }
-
-    return "inicio";
-}
-
-/* =========================================
-   ACTUALIZAR POSICIÓN Y MENSAJE
-========================================= */
 
 function updateMichiSection(sectionId) {
     const { pet } = getMichiElements();
@@ -171,62 +145,47 @@ function updateMichiSection(sectionId) {
         "cumpleanos"
     ];
 
-    const currentSection = validSections.includes(sectionId)
+    const section = validSections.includes(sectionId)
         ? sectionId
         : "inicio";
 
-    pet.dataset.section = currentSection;
+    if (section === currentMichiSection && pet.dataset.section === section) {
+        return;
+    }
 
-    const messages = michiMessages[currentSection];
+    currentMichiSection = section;
+    pet.dataset.section = section;
 
-    showMichiMessage(getRandomMessage(messages));
+    const reaction = michiReactions[section];
 
-    setMichiState("");
-
-    /*
-       Ocultar el mensaje después de unos segundos.
-       El mensaje también puede abrirse al tocar a Michi.
-    */
-
-    window.clearTimeout(pet.messageTimeout);
-
-    pet.messageTimeout = window.setTimeout(() => {
-        hideMichiMessage();
-    }, 4500);
+    setMichiState(reaction.mood);
+    showMichiMessage(getRandomMessage(reaction.messages));
+    scheduleMichiMessage();
 }
 
-/* =========================================
-   INTERACCIÓN AL TOCAR A MICHI
-========================================= */
+function getCurrentSection() {
+    const sections = document.querySelectorAll(".scene");
+
+    for (const section of sections) {
+        if (!section.hidden) {
+            return section.id;
+        }
+    }
+
+    return "inicio";
+}
 
 function handleMichiClick() {
     const { pet } = getMichiElements();
 
     if (!pet) return;
 
-    const reaction = getRandomMessage(michiReactions);
+    const message = getRandomMessage(michiClickMessages);
 
-    const selectedReaction = michiReactions.find(
-        item => item.message === reaction
-    );
-
-    if (!selectedReaction) return;
-
-    setMichiState(selectedReaction.state);
-
-    showMichiMessage(selectedReaction.message);
-
-    window.clearTimeout(pet.messageTimeout);
-
-    pet.messageTimeout = window.setTimeout(() => {
-        hideMichiMessage();
-        setMichiState("");
-    }, 3500);
+    setMichiState("is-happy");
+    showMichiMessage(message);
+    scheduleMichiMessage(3500);
 }
-
-/* =========================================
-   OBSERVAR CAMBIOS DE SECCIÓN
-========================================= */
 
 function initMichiNavigation() {
     const sections = document.querySelectorAll(".scene");
@@ -234,9 +193,7 @@ function initMichiNavigation() {
     if (!sections.length) return;
 
     const observer = new MutationObserver(() => {
-        const currentSection = getCurrentSection();
-
-        updateMichiSection(currentSection);
+        updateMichiSection(getCurrentSection());
     });
 
     sections.forEach(section => {
@@ -245,22 +202,7 @@ function initMichiNavigation() {
             attributeFilter: ["hidden"]
         });
     });
-
-    /*
-       Guardamos el observador para poder desconectarlo
-       si en el futuro necesitamos reiniciar la mascota.
-    */
-
-    const { pet } = getMichiElements();
-
-    if (pet) {
-        pet.sectionObserver = observer;
-    }
 }
-
-/* =========================================
-   INICIALIZAR EVENTOS
-========================================= */
 
 function initMichiEvents() {
     const { button } = getMichiElements();
@@ -269,10 +211,6 @@ function initMichiEvents() {
 
     button.addEventListener("click", handleMichiClick);
 }
-
-/* =========================================
-   INICIALIZAR MICHI
-========================================= */
 
 export function initPet() {
     if (michiInitialized) return;
@@ -289,9 +227,9 @@ export function initPet() {
     initMichiEvents();
     initMichiNavigation();
 
-    const initialSection = getCurrentSection();
+    currentMichiSection = "";
 
-    updateMichiSection(initialSection);
+    updateMichiSection(getCurrentSection());
 
     console.log("🐾 Michi está listo para acompañar a Alexa.");
 }

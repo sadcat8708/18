@@ -370,3 +370,97 @@
         transition: none !important;
     }
 }
+
+/* =========================================
+   PERSONALIDADES Y REACCIONES DE MICHI
+   ========================================= */
+
+/* Curioso: mueve la cabeza suavemente */
+.michi-pet.is-curious .michi-pet__button {
+    animation: michi-curious 1.2s ease-in-out infinite;
+}
+
+/* Tímido: se balancea delicadamente */
+.michi-pet.is-shy .michi-pet__button {
+    animation: michi-shy 2s ease-in-out infinite;
+}
+
+/* Feliz: pequeños saltos */
+.michi-pet.is-happy .michi-pet__button {
+    animation: michi-happy 0.65s ease-in-out;
+}
+
+/* Celebración: salta con entusiasmo */
+.michi-pet.is-celebrating .michi-pet__button {
+    animation: michi-celebrating 0.8s ease-in-out infinite;
+}
+
+/* Curioso */
+@keyframes michi-curious {
+    0%, 100% {
+        transform: rotate(0deg) translateY(0);
+    }
+
+    25% {
+        transform: rotate(-7deg) translateY(-3px);
+    }
+
+    75% {
+        transform: rotate(7deg) translateY(-3px);
+    }
+}
+
+/* Tímido */
+@keyframes michi-shy {
+    0%, 100% {
+        transform: translateX(0) scale(1);
+    }
+
+    50% {
+        transform: translateX(-5px) scale(0.96);
+    }
+}
+
+/* Feliz */
+@keyframes michi-happy {
+    0%, 100% {
+        transform: translateY(0) rotate(0);
+    }
+
+    30% {
+        transform: translateY(-13px) rotate(-8deg);
+    }
+
+    60% {
+        transform: translateY(-5px) rotate(8deg);
+    }
+}
+
+/* Celebración */
+@keyframes michi-celebrating {
+    0%, 100% {
+        transform: translateY(0) rotate(0) scale(1);
+    }
+
+    25% {
+        transform: translateY(-12px) rotate(-8deg) scale(1.06);
+    }
+
+    50% {
+        transform: translateY(0) rotate(0) scale(1);
+    }
+
+    75% {
+        transform: translateY(-12px) rotate(8deg) scale(1.06);
+    }
+}
+
+/* Accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+    .michi-pet.is-curious .michi-pet__button,
+    .michi-pet.is-shy .michi-pet__button,
+    .michi-pet.is-happy .michi-pet__button,
+    .michi-pet.is-celebrating .michi-pet__button {
+        animation: none !important;
+    }
+}

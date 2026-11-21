@@ -1,7 +1,7 @@
 
 /* =========================================
    ALEXA 18 — MICHI, GATITO ACOMPAÑANTE
-   ========================================= */
+========================================= */
 
 const michiReactions = {
     inicio: {
@@ -65,6 +65,44 @@ const michiClickMessages = [
     "¡Qué alegría tenerte por aquí! 🐾",
     "¡Te mando un poquito de ternura!"
 ];
+
+const michiEventReactions = {
+    detail: {
+        mood: "is-celebrating",
+        messages: [
+            "¡Has descubierto otro detalle! ✨",
+            "¡Qué bonito! Cada detalle cuenta.",
+            "¡Miau! ¡Un descubrimiento especial!"
+        ]
+    },
+
+    cat: {
+        mood: "is-happy",
+        messages: [
+            "¡Ese gatito también te manda cariño! 🐾",
+            "¡Los gatitos somos adorables!",
+            "¡Miau! Me encantan estos mensajes."
+        ]
+    },
+
+    surprise: {
+        mood: "is-surprised",
+        messages: [
+            "¡Oh! ¡Has encontrado una sorpresa!",
+            "¡Miauuu! ¡Qué secreto tan bonito!",
+            "¡No esperaba que encontraras eso!"
+        ]
+    },
+
+    "letter-open": {
+        mood: "is-curious",
+        messages: [
+            "¡La carta está abierta! ¿Qué dirá?",
+            "¡Qué emoción! Vamos a leerla.",
+            "Creo que este mensaje es especial. ♡"
+        ]
+    }
+};
 
 let michiInitialized = false;
 let michiMessageTimeout = null;
@@ -131,6 +169,17 @@ function scheduleMichiMessage(duration = 4500) {
     }, duration);
 }
 
+function reactToMichiEvent(event) {
+    const action = event.detail?.action;
+    const reaction = michiEventReactions[action];
+
+    if (!reaction) return;
+
+    setMichiState(reaction.mood);
+    showMichiMessage(getRandomMessage(reaction.messages));
+    scheduleMichiMessage(4000);
+}
+
 function updateMichiSection(sectionId) {
     const { pet } = getMichiElements();
 
@@ -149,7 +198,10 @@ function updateMichiSection(sectionId) {
         ? sectionId
         : "inicio";
 
-    if (section === currentMichiSection && pet.dataset.section === section) {
+    if (
+        section === currentMichiSection &&
+        pet.dataset.section === section
+    ) {
         return;
     }
 
@@ -176,10 +228,6 @@ function getCurrentSection() {
 }
 
 function handleMichiClick() {
-    const { pet } = getMichiElements();
-
-    if (!pet) return;
-
     const message = getRandomMessage(michiClickMessages);
 
     setMichiState("is-happy");
@@ -207,9 +255,11 @@ function initMichiNavigation() {
 function initMichiEvents() {
     const { button } = getMichiElements();
 
-    if (!button) return;
+    if (button) {
+        button.addEventListener("click", handleMichiClick);
+    }
 
-    button.addEventListener("click", handleMichiClick);
+    document.addEventListener("michi:react", reactToMichiEvent);
 }
 
 export function initPet() {

@@ -11,9 +11,22 @@ import {
     hiddenMessages
 } from "./data.js";
 
-/* Evitar inicializaciones duplicadas */
-
 let interactionsInitialized = false;
+
+const discoveredDetails = new Set();
+let detailsProgressElement = null;
+
+
+/**
+ * Envía una reacción a Michi.
+ */
+function notifyMichi(action) {
+    document.dispatchEvent(
+        new CustomEvent("michi:react", {
+            detail: { action }
+        })
+    );
+}
 
 
 /**
@@ -55,23 +68,9 @@ function renderHistory() {
 
         decoration.setAttribute("aria-hidden", "true");
 
-        const date = createElement(
-            "p",
-            "journal-date",
-            story.date
-        );
-
-        const title = createElement(
-            "h3",
-            "journal-title",
-            story.title
-        );
-
-        const text = createElement(
-            "p",
-            "journal-text",
-            story.text
-        );
+        const date = createElement("p", "journal-date", story.date);
+        const title = createElement("h3", "journal-title", story.title);
+        const text = createElement("p", "journal-text", story.text);
 
         const number = createElement(
             "span",
@@ -79,16 +78,154 @@ function renderHistory() {
             String(index + 1).padStart(2, "0")
         );
 
-        card.append(
-            decoration,
-            date,
-            title,
-            text,
-            number
-        );
-
+        card.append(decoration, date, title, text, number);
         container.appendChild(card);
     });
+}
+
+
+/**
+ * Crea el contador de detalles descubiertos.
+ */
+function createDetailsProgress(container) {
+    const progress = createElement(
+        "div",
+        "details-progress"
+    );
+
+    progress.id = "details-progress";
+
+    const heading = createElement(
+        "p",
+        "details-progress__heading",
+        "Tu colección de detalles"
+    );
+
+    const count = createElement(
+        "p",
+        "details-progress__count",
+        `0 de ${detailsData.length} descubiertos`
+    );
+
+    count.id = "details-progress-count";
+
+    const track = createElement(
+        "div",
+        "details-progress__track"
+    );
+
+    track.setAttribute("role", "progressbar");
+    track.setAttribute("aria-label", "Detalles descubiertos");
+    track.setAttribute("aria-valuemin", "0");
+    track.setAttribute("aria-valuemax", String(detailsData.length));
+    track.setAttribute("aria-valuenow", "0");
+
+    const fill = createElement(
+        "div",
+        "details-progress__fill"
+    );
+
+    fill.id = "details-progress-fill";
+
+    track.appendChild(fill);
+
+    const completion = createElement(
+        "p",
+        "details-progress__completion",
+        ""
+    );
+
+    completion.id = "details-progress-completion";
+    completion.hidden = true;
+
+    progress.append(
+        heading,
+        count,
+        track,
+        completion
+    );
+
+    container.parentNode.insertBefore(progress, container);
+
+    detailsProgressElement = progress;
+}
+
+
+/**
+ * Actualiza el contador visual.
+ */
+function updateDetailsProgress() {
+    const countElement = document.getElementById(
+        "details-progress-count"
+    );
+
+    const fillElement = document.getElementById(
+        "details-progress-fill"
+    );
+
+    const trackElement = detailsProgressElement?.querySelector(
+        '[role="progressbar"]'
+    );
+
+    const completionElement = document.getElementById(
+        "details-progress-completion"
+    );
+
+    const total = detailsData.length;
+    const discovered = discoveredDetails.size;
+    const percentage = total > 0
+        ? (discovered / total) * 100
+        : 0;
+
+    if (countElement) {
+        countElement.textContent =
+            `${discovered} de ${total} descubiertos`;
+    }
+
+    if (fillElement) {
+        fillElement.style.width = `${percentage}%`;
+    }
+
+    if (trackElement) {
+        trackElement.setAttribute(
+            "aria-valuenow",
+            String(discovered)
+        );
+    }
+
+    if (discovered === total && total > 0) {
+        if (completionElement && completionElement.hidden) {
+            completionElement.hidden = false;
+
+            completionElement.textContent =
+                "¡Colección completada! Has descubierto los 18 detalles. ♡";
+
+            detailsProgressElement?.classList.add(
+                "details-progress--complete"
+            );
+
+            notifyMichi("all-details");
+        }
+    }
+}
+
+
+/**
+ * Registra un detalle como descubierto.
+ */
+function discoverDetail(card, index) {
+    if (discoveredDetails.has(index)) return;
+
+    discoveredDetails.add(index);
+
+    card.classList.add("detail-discovered");
+    card.setAttribute("aria-pressed", "true");
+
+    updateDetailsProgress();
+
+    if (discoveredDetails.size < detailsData.length) {
+        notifyMichi("detail");
+    }
 }
 
 
@@ -104,7 +241,9 @@ function renderDetails() {
 
     if (!Array.isArray(detailsData)) return;
 
-    detailsData.forEach(detail => {
+    createDetailsProgress(container);
+
+    detailsData.forEach((detail, index) => {
         const card = createElement("article", "detail-card");
 
         const icon = createElement(
@@ -129,8 +268,29 @@ function renderDetails() {
 
         card.append(icon, title, text);
 
+        card.tabIndex = 0;
+        card.setAttribute("role", "button");
+        card.setAttribute("aria-pressed", "false");
+        card.setAttribute(
+            "aria-label",
+            `Descubrir detalle: ${detail.title}`
+        );
+
+        card.addEventListener("click", () => {
+            discoverDetail(card, index);
+        });
+
+        card.addEventListener("keydown", event => {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                discoverDetail(card, index);
+            }
+        });
+
         container.appendChild(card);
     });
+
+    updateDetailsProgress();
 }
 
 
@@ -168,11 +328,7 @@ function renderCats() {
 
         imageContainer.appendChild(image);
 
-        const name = createElement(
-            "h3",
-            "cat-name",
-            cat.name
-        );
+        const name = createElement("h3", "cat-name", cat.name);
 
         const description = createElement(
             "p",
@@ -190,6 +346,7 @@ function renderCats() {
 
         messageButton.addEventListener("click", () => {
             showCatMessage(cat.message);
+            notifyMichi("cat");
         });
 
         card.append(
@@ -244,19 +401,13 @@ function showCatMessage(message) {
         sparkles
     );
 
-    /* Reiniciar animación */
-
     messageContainer.classList.remove("cat-message-animation");
 
     void messageContainer.offsetWidth;
 
     messageContainer.classList.add("cat-message-animation");
 
-    /* Mostrar mensaje */
-
     surprise.hidden = false;
-
-    /* Desplazarse hasta la sorpresa */
 
     const reduceMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)"
@@ -286,6 +437,7 @@ function initCatSurprise() {
                 "¡Has descubierto un pequeño secreto de ALEXA 18! ♡"
             );
 
+            notifyMichi("surprise");
             return;
         }
 
@@ -294,6 +446,7 @@ function initCatSurprise() {
         );
 
         showCatMessage(hiddenMessages[randomIndex]);
+        notifyMichi("surprise");
     });
 }
 
@@ -369,6 +522,10 @@ function initLetter() {
             "aria-expanded",
             String(isClosed)
         );
+
+        if (isClosed) {
+            notifyMichi("letter-open");
+        }
     });
 }
 
@@ -377,9 +534,6 @@ function initLetter() {
  * Inicializa todas las interacciones.
  */
 export function initInteractions() {
-
-    /* Evitar eventos duplicados */
-
     if (interactionsInitialized) return;
 
     interactionsInitialized = true;

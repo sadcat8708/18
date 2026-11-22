@@ -831,3 +831,157 @@
         transition: none;
     }
 }
+
+/* =========================================
+   ALEXA 18 — CUBIERTAS DE LOS 18 DETALLES
+========================================= */
+
+/* La tarjeta funciona como escenario */
+.detail-card {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+/* Cubierta de papel */
+.detail-cover {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    padding: 20px;
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(255, 255, 255, 0.8) 0 3px,
+            transparent 4px
+        ),
+        radial-gradient(
+            circle at 85% 75%,
+            rgba(255, 255, 255, 0.7) 0 3px,
+            transparent 4px
+        ),
+        linear-gradient(
+            145deg,
+            #FCE8E9,
+            #F4D4D9,
+            #EFCBD2
+        );
+
+    border: 2px solid #E8B9C2;
+    border-radius: inherit;
+
+    text-align: center;
+    cursor: pointer;
+
+    transform-origin: top center;
+    backface-visibility: hidden;
+}
+
+/* Corazón decorativo */
+.detail-cover__decoration {
+    color: #BD7587;
+    font-size: 42px;
+    line-height: 1;
+
+    animation: coverHeart 2s ease-in-out infinite;
+}
+
+/* Título de la cubierta */
+.detail-cover__title {
+    color: #79535A;
+    font-family: var(--font-heading);
+    font-size: 19px;
+    font-weight: 600;
+}
+
+/* Instrucción */
+.detail-cover__instruction {
+    color: #966D75;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+/* Estrella decorativa */
+.detail-cover__number {
+    color: #B98779;
+    font-size: 23px;
+    margin-top: 4px;
+}
+
+/* Efecto al pasar el cursor */
+.detail-card:not(.detail-discovered):hover .detail-cover {
+    background:
+        linear-gradient(
+            145deg,
+            #FFF0F1,
+            #F5D8DE,
+            #EFCBD2
+        );
+}
+
+/* Animación de caída */
+.detail-cover--falling {
+    pointer-events: none;
+    animation: detailCoverFall 0.85s cubic-bezier(
+        0.55,
+        0.05,
+        0.8,
+        0.3
+    ) forwards;
+}
+
+/* Movimiento del corazón */
+@keyframes coverHeart {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.12);
+    }
+}
+
+/* La cubierta cae y desaparece */
+@keyframes detailCoverFall {
+    0% {
+        opacity: 1;
+        transform: translateY(0) rotate(0deg);
+    }
+
+    35% {
+        opacity: 1;
+        transform: translateY(12px) rotate(-5deg);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(115%) rotate(16deg);
+    }
+}
+
+/* Tarjetas descubiertas */
+.detail-card.detail-discovered {
+    border-color: #DDAAB5;
+    box-shadow: 0 5px 18px rgba(150, 85, 95, 0.12);
+}
+
+/* Accesibilidad: reducir movimiento */
+@media (prefers-reduced-motion: reduce) {
+    .detail-cover__decoration {
+        animation: none;
+    }
+
+    .detail-cover--falling {
+        animation: none;
+        opacity: 0;
+        transform: translateY(100%);
+    }
+}

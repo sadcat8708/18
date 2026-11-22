@@ -305,6 +305,14 @@ function discoverDetail(card, index) {
     card.classList.add("detail-discovered");
     card.setAttribute("aria-pressed", "true");
 
+    // Iniciar la animación de caída de la cubierta.
+    const cover = card.querySelector(".detail-cover");
+
+    if (cover) {
+        cover.classList.add("detail-cover--falling");
+        cover.setAttribute("aria-hidden", "true");
+    }
+
     // Guardar automáticamente el progreso.
     saveDiscoveredDetails();
 
@@ -314,6 +322,52 @@ function discoverDetail(card, index) {
     if (discoveredDetails.size < detailsData.length) {
         notifyMichi("detail");
     }
+}
+
+
+/**
+ * Crea la cubierta que oculta cada detalle.
+ */
+function createDetailCover() {
+    const cover = createElement(
+        "div",
+        "detail-cover"
+    );
+
+    cover.setAttribute("aria-hidden", "true");
+
+    const decoration = createElement(
+        "span",
+        "detail-cover__decoration",
+        "♡"
+    );
+
+    const title = createElement(
+        "span",
+        "detail-cover__title",
+        "Un detalle para ti"
+    );
+
+    const instruction = createElement(
+        "span",
+        "detail-cover__instruction",
+        "Toca para descubrir"
+    );
+
+    const number = createElement(
+        "span",
+        "detail-cover__number",
+        "✧"
+    );
+
+    cover.append(
+        decoration,
+        title,
+        instruction,
+        number
+    );
+
+    return cover;
 }
 
 
@@ -376,10 +430,13 @@ function renderDetails() {
             `Descubrir detalle: ${detail.title}`
         );
 
-        // Recuperar visualmente los detalles ya descubiertos.
+        // Si ya fue descubierto, mostrarlo sin cubierta.
         if (discoveredDetails.has(index)) {
             card.classList.add("detail-discovered");
             card.setAttribute("aria-pressed", "true");
+        } else {
+            // Si todavía no se descubre, colocar la cubierta.
+            card.appendChild(createDetailCover());
         }
 
         card.addEventListener("click", () => {

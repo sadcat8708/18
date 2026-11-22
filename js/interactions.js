@@ -16,6 +16,8 @@ let interactionsInitialized = false;
 const discoveredDetails = new Set();
 let detailsProgressElement = null;
 
+const DETAILS_STORAGE_KEY = "alexa18-details-progress";
+
 
 /**
  * Envía una reacción a Michi.
@@ -26,6 +28,55 @@ function notifyMichi(action) {
             detail: { action }
         })
     );
+}
+
+
+/**
+ * Recupera los detalles guardados en el navegador.
+ */
+function loadDiscoveredDetails() {
+    try {
+        const saved = localStorage.getItem(DETAILS_STORAGE_KEY);
+
+        if (!saved) return;
+
+        const parsed = JSON.parse(saved);
+
+        if (!Array.isArray(parsed)) return;
+
+        parsed.forEach(index => {
+            if (
+                Number.isInteger(index) &&
+                index >= 0 &&
+                index < detailsData.length
+            ) {
+                discoveredDetails.add(index);
+            }
+        });
+    } catch (error) {
+        console.warn(
+            "No se pudo recuperar el progreso:",
+            error
+        );
+    }
+}
+
+
+/**
+ * Guarda los detalles descubiertos en el navegador.
+ */
+function saveDiscoveredDetails() {
+    try {
+        localStorage.setItem(
+            DETAILS_STORAGE_KEY,
+            JSON.stringify([...discoveredDetails])
+        );
+    } catch (error) {
+        console.warn(
+            "No se pudo guardar el progreso:",
+            error
+        );
+    }
 }
 
 
@@ -68,9 +119,23 @@ function renderHistory() {
 
         decoration.setAttribute("aria-hidden", "true");
 
-        const date = createElement("p", "journal-date", story.date);
-        const title = createElement("h3", "journal-title", story.title);
-        const text = createElement("p", "journal-text", story.text);
+        const date = createElement(
+            "p",
+            "journal-date",
+            story.date
+        );
+
+        const title = createElement(
+            "h3",
+            "journal-title",
+            story.title
+        );
+
+        const text = createElement(
+            "p",
+            "journal-text",
+            story.text
+        );
 
         const number = createElement(
             "span",
@@ -78,7 +143,14 @@ function renderHistory() {
             String(index + 1).padStart(2, "0")
         );
 
-        card.append(decoration, date, title, text, number);
+        card.append(
+            decoration,
+            date,
+            title,
+            text,
+            number
+        );
+
         container.appendChild(card);
     });
 }
@@ -115,9 +187,15 @@ function createDetailsProgress(container) {
     );
 
     track.setAttribute("role", "progressbar");
-    track.setAttribute("aria-label", "Detalles descubiertos");
+    track.setAttribute(
+        "aria-label",
+        "Detalles descubiertos"
+    );
     track.setAttribute("aria-valuemin", "0");
-    track.setAttribute("aria-valuemax", String(detailsData.length));
+    track.setAttribute(
+        "aria-valuemax",
+        String(detailsData.length)
+    );
     track.setAttribute("aria-valuenow", "0");
 
     const fill = createElement(
@@ -145,7 +223,10 @@ function createDetailsProgress(container) {
         completion
     );
 
-    container.parentNode.insertBefore(progress, container);
+    container.parentNode.insertBefore(
+        progress,
+        container
+    );
 
     detailsProgressElement = progress;
 }
@@ -154,7 +235,7 @@ function createDetailsProgress(container) {
 /**
  * Actualiza el contador visual.
  */
-function updateDetailsProgress() {
+function updateDetailsProgress(notifyCompletion = false) {
     const countElement = document.getElementById(
         "details-progress-count"
     );
@@ -173,6 +254,7 @@ function updateDetailsProgress() {
 
     const total = detailsData.length;
     const discovered = discoveredDetails.size;
+
     const percentage = total > 0
         ? (discovered / total) * 100
         : 0;
@@ -194,16 +276,18 @@ function updateDetailsProgress() {
     }
 
     if (discovered === total && total > 0) {
-        if (completionElement && completionElement.hidden) {
+        if (completionElement) {
             completionElement.hidden = false;
 
             completionElement.textContent =
                 "¡Colección completada! Has descubierto los 18 detalles. ♡";
+        }
 
-            detailsProgressElement?.classList.add(
-                "details-progress--complete"
-            );
+        detailsProgressElement?.classList.add(
+            "details-progress--complete"
+        );
 
+        if (notifyCompletion) {
             notifyMichi("all-details");
         }
     }
@@ -221,7 +305,11 @@ function discoverDetail(card, index) {
     card.classList.add("detail-discovered");
     card.setAttribute("aria-pressed", "true");
 
-    updateDetailsProgress();
+    // Guardar automáticamente el progreso.
+    saveDiscoveredDetails();
+
+    // Actualizar el contador y comprobar si terminó.
+    updateDetailsProgress(true);
 
     if (discoveredDetails.size < detailsData.length) {
         notifyMichi("detail");
@@ -241,10 +329,16 @@ function renderDetails() {
 
     if (!Array.isArray(detailsData)) return;
 
+    // Recuperar el progreso guardado.
+    loadDiscoveredDetails();
+
     createDetailsProgress(container);
 
     detailsData.forEach((detail, index) => {
-        const card = createElement("article", "detail-card");
+        const card = createElement(
+            "article",
+            "detail-card"
+        );
 
         const icon = createElement(
             "span",
@@ -266,22 +360,37 @@ function renderDetails() {
             detail.text
         );
 
-        card.append(icon, title, text);
+        card.append(
+            icon,
+            title,
+            text
+        );
 
         card.tabIndex = 0;
+
         card.setAttribute("role", "button");
         card.setAttribute("aria-pressed", "false");
+
         card.setAttribute(
             "aria-label",
             `Descubrir detalle: ${detail.title}`
         );
+
+        // Recuperar visualmente los detalles ya descubiertos.
+        if (discoveredDetails.has(index)) {
+            card.classList.add("detail-discovered");
+            card.setAttribute("aria-pressed", "true");
+        }
 
         card.addEventListener("click", () => {
             discoverDetail(card, index);
         });
 
         card.addEventListener("keydown", event => {
-            if (event.key === "Enter" || event.key === " ") {
+            if (
+                event.key === "Enter" ||
+                event.key === " "
+            ) {
                 event.preventDefault();
                 discoverDetail(card, index);
             }
@@ -290,7 +399,8 @@ function renderDetails() {
         container.appendChild(card);
     });
 
-    updateDetailsProgress();
+    // Actualizar el contador sin repetir la celebración de Michi.
+    updateDetailsProgress(false);
 }
 
 
@@ -307,7 +417,10 @@ function renderCats() {
     if (!Array.isArray(catsData)) return;
 
     catsData.forEach(cat => {
-        const card = createElement("article", "cat-card");
+        const card = createElement(
+            "article",
+            "cat-card"
+        );
 
         const imageContainer = createElement(
             "div",
@@ -328,7 +441,11 @@ function renderCats() {
 
         imageContainer.appendChild(image);
 
-        const name = createElement("h3", "cat-name", cat.name);
+        const name = createElement(
+            "h3",
+            "cat-name",
+            cat.name
+        );
 
         const description = createElement(
             "p",
@@ -401,11 +518,15 @@ function showCatMessage(message) {
         sparkles
     );
 
-    messageContainer.classList.remove("cat-message-animation");
+    messageContainer.classList.remove(
+        "cat-message-animation"
+    );
 
     void messageContainer.offsetWidth;
 
-    messageContainer.classList.add("cat-message-animation");
+    messageContainer.classList.add(
+        "cat-message-animation"
+    );
 
     surprise.hidden = false;
 
@@ -446,6 +567,7 @@ function initCatSurprise() {
         );
 
         showCatMessage(hiddenMessages[randomIndex]);
+
         notifyMichi("surprise");
     });
 }

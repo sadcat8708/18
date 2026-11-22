@@ -101,6 +101,15 @@ const michiEventReactions = {
             "¡Qué emoción! Vamos a leerla.",
             "Creo que este mensaje es especial. ♡"
         ]
+    },
+
+    "all-details": {
+        mood: "is-celebrating",
+        messages: [
+            "¡¡LO LOGRASTE!! ¡Descubriste los 18 detalles! 🎉",
+            "¡Miauuu! ¡Completaste toda la colección! ♡",
+            "¡Eres una gran exploradora! ¡Los 18 detalles descubiertos!"
+        ]
     }
 };
 
@@ -177,7 +186,10 @@ function reactToMichiEvent(event) {
 
     setMichiState(reaction.mood);
     showMichiMessage(getRandomMessage(reaction.messages));
-    scheduleMichiMessage(4000);
+
+    const duration = action === "all-details" ? 7000 : 4000;
+
+    scheduleMichiMessage(duration);
 }
 
 function updateMichiSection(sectionId) {

@@ -832,18 +832,18 @@
     }
 }
 
+
 /* =========================================
-   ALEXA 18 — CUBIERTAS DE LOS 18 DETALLES
+   ALEXA 18 — CUBIERTAS DE REGALOS KAWAII
 ========================================= */
 
-/* La tarjeta funciona como escenario */
 .detail-card {
     position: relative;
     overflow: hidden;
     isolation: isolate;
 }
 
-/* Cubierta de papel */
+/* Cubierta de regalo */
 .detail-cover {
     position: absolute;
     inset: 0;
@@ -858,22 +858,29 @@
     padding: 20px;
 
     background:
+        linear-gradient(
+            90deg,
+            transparent 43%,
+            rgba(255, 255, 255, 0.55) 43% 57%,
+            transparent 57%
+        ),
+        linear-gradient(
+            0deg,
+            transparent 43%,
+            rgba(255, 255, 255, 0.55) 43% 57%,
+            transparent 57%
+        ),
         radial-gradient(
             circle at 15% 20%,
-            rgba(255, 255, 255, 0.8) 0 3px,
-            transparent 4px
+            #fff 0 2px,
+            transparent 3px
         ),
         radial-gradient(
             circle at 85% 75%,
-            rgba(255, 255, 255, 0.7) 0 3px,
-            transparent 4px
+            #fff 0 2px,
+            transparent 3px
         ),
-        linear-gradient(
-            145deg,
-            #FCE8E9,
-            #F4D4D9,
-            #EFCBD2
-        );
+        linear-gradient(145deg, #FCE8E9, #F2CCD5, #EFC3CE);
 
     border: 2px solid #E8B9C2;
     border-radius: inherit;
@@ -881,99 +888,98 @@
     text-align: center;
     cursor: pointer;
 
-    transform-origin: top center;
+    transform-origin: center;
     backface-visibility: hidden;
+
+    box-shadow: inset 0 0 20px rgba(255,255,255,.35);
 }
 
-/* Corazón decorativo */
+/* Moño */
 .detail-cover__decoration {
-    color: #BD7587;
-    font-size: 42px;
+    font-size: 46px;
     line-height: 1;
 
-    animation: coverHeart 2s ease-in-out infinite;
+    filter: drop-shadow(0 3px 2px rgba(130, 75, 85, .15));
+
+    animation: giftBow 2s ease-in-out infinite;
 }
 
-/* Título de la cubierta */
+/* Texto */
 .detail-cover__title {
     color: #79535A;
     font-family: var(--font-heading);
     font-size: 19px;
     font-weight: 600;
+    text-shadow: 0 1px 2px rgba(255,255,255,.6);
 }
 
-/* Instrucción */
 .detail-cover__instruction {
     color: #966D75;
     font-size: 12px;
     letter-spacing: 1px;
 }
 
-/* Estrella decorativa */
 .detail-cover__number {
     color: #B98779;
     font-size: 23px;
     margin-top: 4px;
 }
 
-/* Efecto al pasar el cursor */
+/* Brillo al pasar el cursor */
 .detail-card:not(.detail-discovered):hover .detail-cover {
-    background:
-        linear-gradient(
-            145deg,
-            #FFF0F1,
-            #F5D8DE,
-            #EFCBD2
-        );
+    filter: brightness(1.06);
 }
 
-/* Animación de caída */
+.detail-card:not(.detail-discovered):hover
+.detail-cover__decoration {
+    transform: scale(1.12) rotate(-5deg);
+}
+
+/* Animación de apertura del regalo */
 .detail-cover--falling {
     pointer-events: none;
-    animation: detailCoverFall 0.85s cubic-bezier(
-        0.55,
-        0.05,
-        0.8,
-        0.3
-    ) forwards;
+    animation: giftOpen .9s cubic-bezier(.2,.75,.25,1) forwards;
 }
 
-/* Movimiento del corazón */
-@keyframes coverHeart {
+@keyframes giftBow {
     0%, 100% {
-        transform: scale(1);
+        transform: translateY(0) rotate(0);
     }
 
     50% {
-        transform: scale(1.12);
+        transform: translateY(-5px) rotate(5deg);
     }
 }
 
-/* La cubierta cae y desaparece */
-@keyframes detailCoverFall {
+@keyframes giftOpen {
     0% {
         opacity: 1;
-        transform: translateY(0) rotate(0deg);
+        transform: scale(1) rotate(0);
     }
 
-    35% {
+    25% {
         opacity: 1;
-        transform: translateY(12px) rotate(-5deg);
+        transform: scale(1.08) rotate(-4deg);
+    }
+
+    55% {
+        opacity: 1;
+        transform: translateY(-35px) scale(.95) rotate(5deg);
     }
 
     100% {
         opacity: 0;
-        transform: translateY(115%) rotate(16deg);
+        transform: translateY(120%) scale(.75) rotate(12deg);
     }
 }
 
 /* Tarjetas descubiertas */
 .detail-card.detail-discovered {
     border-color: #DDAAB5;
-    box-shadow: 0 5px 18px rgba(150, 85, 95, 0.12);
+    box-shadow: 0 5px 18px rgba(150, 85, 95, .12);
 }
 
-/* Accesibilidad: reducir movimiento */
+/* Accesibilidad */
 @media (prefers-reduced-motion: reduce) {
     .detail-cover__decoration {
         animation: none;

@@ -294,18 +294,42 @@ function updateDetailsProgress(notifyCompletion = false) {
 }
 
 
+
 /**
- * Registra un detalle como descubierto.
+ * Registra un detalle como descubierto
+ * y crea una animación de estrellitas doradas.
  */
 function discoverDetail(card, index) {
     if (discoveredDetails.has(index)) return;
 
     discoveredDetails.add(index);
 
+    // Marcar la tarjeta como descubierta.
     card.classList.add("detail-discovered");
     card.setAttribute("aria-pressed", "true");
 
-    // Iniciar la animación de caída de la cubierta.
+    // Crear el contenedor de destellos.
+    const sparklesContainer = createElement(
+        "div",
+        "detail-sparkles"
+    );
+
+    sparklesContainer.setAttribute("aria-hidden", "true");
+
+    // Crear seis estrellitas.
+    for (let i = 0; i < 6; i++) {
+        const sparkle = createElement(
+            "span",
+            "detail-sparkle",
+            "✦"
+        );
+
+        sparklesContainer.appendChild(sparkle);
+    }
+
+    card.appendChild(sparklesContainer);
+
+    // Animar la cubierta.
     const cover = card.querySelector(".detail-cover");
 
     if (cover) {
@@ -316,12 +340,18 @@ function discoverDetail(card, index) {
     // Guardar automáticamente el progreso.
     saveDiscoveredDetails();
 
-    // Actualizar el contador y comprobar si terminó.
+    // Actualizar el contador.
     updateDetailsProgress(true);
 
+    // Reacción de Michi.
     if (discoveredDetails.size < detailsData.length) {
         notifyMichi("detail");
     }
+
+    // Retirar los destellos cuando termine la animación.
+    window.setTimeout(() => {
+        sparklesContainer.remove();
+    }, 1300);
 }
 
 

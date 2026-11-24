@@ -991,3 +991,89 @@
         transform: translateY(100%);
     }
 }
+
+/* =========================================
+   DESTELLOS DORADOS AL ABRIR LOS REGALOS
+========================================= */
+
+.detail-sparkles {
+    position: absolute;
+    inset: 0;
+    z-index: 8;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.detail-sparkle {
+    position: absolute;
+    color: #D6A83F;
+    font-size: 20px;
+    opacity: 0;
+    animation: goldenSparkle .9s ease-out forwards;
+    text-shadow: 0 0 8px rgba(232, 190, 90, .5);
+}
+
+.detail-sparkle:nth-child(1) {
+    top: 15%;
+    left: 18%;
+    animation-delay: 0s;
+}
+
+.detail-sparkle:nth-child(2) {
+    top: 22%;
+    right: 17%;
+    font-size: 25px;
+    animation-delay: .08s;
+}
+
+.detail-sparkle:nth-child(3) {
+    bottom: 22%;
+    left: 20%;
+    font-size: 16px;
+    animation-delay: .15s;
+}
+
+.detail-sparkle:nth-child(4) {
+    bottom: 18%;
+    right: 20%;
+    font-size: 23px;
+    animation-delay: .05s;
+}
+
+.detail-sparkle:nth-child(5) {
+    top: 48%;
+    left: 8%;
+    font-size: 14px;
+    animation-delay: .2s;
+}
+
+.detail-sparkle:nth-child(6) {
+    top: 45%;
+    right: 8%;
+    font-size: 17px;
+    animation-delay: .12s;
+}
+
+@keyframes goldenSparkle {
+    0% {
+        opacity: 0;
+        transform: scale(.2) rotate(0deg);
+    }
+
+    35% {
+        opacity: 1;
+        transform: scale(1.2) rotate(45deg);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(.3) rotate(100deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .detail-sparkle {
+        animation: none;
+        display: none;
+    }
+}

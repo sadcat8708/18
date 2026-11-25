@@ -1121,7 +1121,7 @@
     color: #D6A83F;
     font-size: 20px;
     opacity: 0;
-    animation: goldenSparkle .9s ease-out forwards;
+    animation: goldenSparkle 1.5s ease-out forwards;
     text-shadow: 0 0 8px rgba(232, 190, 90, .5);
 }
 

@@ -355,6 +355,7 @@ function discoverDetail(card, index) {
 }
 
 
+
 /**
  * Crea la cubierta que oculta cada detalle.
  */
@@ -366,10 +367,11 @@ function createDetailCover() {
 
     cover.setAttribute("aria-hidden", "true");
 
+    // Moño del regalo
     const decoration = createElement(
         "span",
         "detail-cover__decoration",
-        "♡"
+        "🎀"
     );
 
     const title = createElement(
@@ -399,6 +401,7 @@ function createDetailCover() {
 
     return cover;
 }
+
 
 
 /**

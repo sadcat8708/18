@@ -1189,3 +1189,95 @@
         display: none;
     }
 }
+
+/* =========================================
+   ALEXA 18 — TARJETAS DE DETALLES DESCUBIERTOS
+========================================= */
+
+/* Distintivo de colección */
+.detail-card.detail-discovered::after {
+    content: "✦ DETALLE DESCUBIERTO";
+
+    position: absolute;
+    top: 12px;
+    right: 12px;
+
+    padding: 6px 10px;
+
+    color: #A77C39;
+    background: #FFF8E9;
+    border: 1px solid rgba(198, 154, 72, .35);
+    border-radius: 20px;
+
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+
+    animation: discoveredBadge .7s ease both;
+}
+
+/* Aparición del contenido */
+.detail-card.detail-discovered .detail-icon,
+.detail-card.detail-discovered .detail-title,
+.detail-card.detail-discovered .detail-text {
+    animation: detailReveal .8s ease both;
+}
+
+.detail-card.detail-discovered .detail-icon {
+    animation-delay: .1s;
+}
+
+.detail-card.detail-discovered .detail-title {
+    animation-delay: .2s;
+}
+
+.detail-card.detail-discovered .detail-text {
+    animation-delay: .3s;
+}
+
+/* Brillo delicado */
+.detail-card.detail-discovered {
+    border-color: #DDBB82;
+
+    box-shadow:
+        0 6px 22px rgba(166, 125, 65, .12),
+        inset 0 0 18px rgba(255, 248, 230, .35);
+
+    transition:
+        box-shadow .4s ease,
+        border-color .4s ease;
+}
+
+@keyframes discoveredBadge {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes detailReveal {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+    .detail-card.detail-discovered::after,
+    .detail-card.detail-discovered .detail-icon,
+    .detail-card.detail-discovered .detail-title,
+    .detail-card.detail-discovered .detail-text {
+        animation: none;
+    }
+}

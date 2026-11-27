@@ -1,50 +1,53 @@
 
 /* =========================================
-   ALEXA 18 - MICHl, MASCOTA VIRTUAL
-   Estilos principales de la mascota
-========================================= */
+   MICHI - MASCOTA INTERACTIVA
+   ========================================= */
 
 :root {
-    --pet-pink: #e8a5b8;
-    --pet-pink-light: #f8dce5;
-    --pet-cream: #fffaf4;
-    --pet-brown: #76534f;
-    --pet-shadow: rgba(118, 83, 79, 0.18);
+    --michi-pink: #e8a5b8;
+    --michi-light-pink: #f8dce5;
+    --michi-cream: #fffaf4;
+    --michi-brown: #76534f;
+    --michi-gold: #d6ad65;
+    --michi-shadow: rgba(118, 83, 79, 0.18);
 }
 
 /* =========================================
    CONTENEDOR PRINCIPAL
-========================================= */
+   ========================================= */
 
 .michi-pet {
     position: fixed;
-    right: 28px;
-    bottom: 24px;
-    z-index: 900;
-
-    width: 145px;
+    right: 22px;
+    bottom: 20px;
+    z-index: 1000;
 
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 8px;
 
+    width: max-content;
+    max-width: 190px;
+
     pointer-events: none;
 
     transition:
-        right 0.7s ease,
-        left 0.7s ease,
-        bottom 0.7s ease,
-        transform 0.5s ease,
-        opacity 0.4s ease;
+        right 0.5s ease,
+        bottom 0.5s ease,
+        transform 0.4s ease;
 }
 
 /* =========================================
-   BOTÓN DE LA MASCOTA
-========================================= */
+   BOTÓN E ILUSTRACIÓN
+   ========================================= */
 
 .michi-pet__button {
     position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     width: 135px;
     height: 135px;
@@ -56,24 +59,27 @@
     cursor: pointer;
     pointer-events: auto;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
     animation: michi-float 3.5s ease-in-out infinite;
 
-    -webkit-tap-highlight-color: transparent;
+    transition:
+        transform 0.3s ease,
+        filter 0.3s ease;
+}
+
+.michi-pet__button:hover {
+    transform: translateY(-5px) scale(1.05);
+    filter: drop-shadow(0 8px 12px var(--michi-shadow));
+}
+
+.michi-pet__button:active {
+    transform: scale(0.94);
 }
 
 .michi-pet__button:focus-visible {
-    outline: 3px solid var(--pet-pink);
+    outline: 3px solid var(--michi-pink);
     outline-offset: 5px;
     border-radius: 50%;
 }
-
-/* =========================================
-   ILUSTRACIÓN DE MICHI
-========================================= */
 
 .michi-pet__image {
     display: block;
@@ -83,71 +89,50 @@
 
     object-fit: contain;
 
-    filter: drop-shadow(
-        0 8px 10px var(--pet-shadow)
-    );
+    user-select: none;
+    -webkit-user-drag: none;
+
+    filter: drop-shadow(0 5px 8px var(--michi-shadow));
 
     transition:
-        transform 0.35s ease,
-        filter 0.35s ease;
-}
-
-/* Reacción al pasar el cursor */
-
-.michi-pet__button:hover .michi-pet__image {
-    transform: scale(1.08) rotate(-4deg);
-
-    filter: drop-shadow(
-        0 12px 14px rgba(232, 165, 184, 0.35)
-    );
-}
-
-/* Reacción al tocar a Michi */
-
-.michi-pet__button:active .michi-pet__image {
-    transform: scale(0.92);
+        transform 0.3s ease,
+        filter 0.3s ease;
 }
 
 /* =========================================
-   GLOBO DE MENSAJES
-========================================= */
+   GLOBO DE DIÁLOGO
+   ========================================= */
 
 .michi-pet__bubble {
     position: relative;
 
-    max-width: 210px;
-    min-width: 120px;
+    max-width: 190px;
+    padding: 12px 16px;
 
-    padding: 11px 15px;
-
-    background: var(--pet-cream);
-
-    border: 1px solid var(--pet-pink-light);
+    border: 2px solid var(--michi-light-pink);
     border-radius: 18px;
 
-    color: var(--pet-brown);
+    background: var(--michi-cream);
+    color: var(--michi-brown);
 
-    font-family: inherit;
-    font-size: 0.82rem;
-    font-weight: 500;
-    line-height: 1.45;
-
+    font-size: 0.85rem;
+    line-height: 1.5;
     text-align: center;
 
-    box-shadow:
-        0 5px 18px rgba(118, 83, 79, 0.10);
+    box-shadow: 0 5px 18px var(--michi-shadow);
 
     opacity: 0;
     visibility: hidden;
 
     transform: translateY(8px) scale(0.95);
+    transform-origin: bottom center;
+
+    pointer-events: none;
 
     transition:
         opacity 0.3s ease,
-        visibility 0.3s ease,
-        transform 0.3s ease;
-
-    pointer-events: none;
+        transform 0.3s ease,
+        visibility 0.3s ease;
 }
 
 /* Pequeña punta del globo */
@@ -156,158 +141,249 @@
     content: "";
 
     position: absolute;
-
-    bottom: -7px;
+    bottom: -9px;
     left: 50%;
 
-    width: 13px;
-    height: 13px;
+    width: 14px;
+    height: 14px;
 
-    background: var(--pet-cream);
+    background: var(--michi-cream);
 
-    border-right: 1px solid var(--pet-pink-light);
-    border-bottom: 1px solid var(--pet-pink-light);
+    border-right: 2px solid var(--michi-light-pink);
+    border-bottom: 2px solid var(--michi-light-pink);
 
     transform: translateX(-50%) rotate(45deg);
 }
 
-/* Mostrar el mensaje */
+/* Mostrar diálogo */
 
-.michi-pet.is-talking .michi-pet__bubble,
-.michi-pet:hover .michi-pet__bubble,
-.michi-pet:focus-within .michi-pet__bubble {
+.michi-pet.is-talking .michi-pet__bubble {
     opacity: 1;
     visibility: visible;
-
     transform: translateY(0) scale(1);
 }
 
 /* =========================================
-   ESTADOS DE MICHI
-========================================= */
+   ANIMACIÓN NORMAL
+   ========================================= */
 
-/* Michi está feliz */
+@keyframes michi-float {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+/* =========================================
+   ESTADO: FELIZ
+   ========================================= */
 
 .michi-pet.is-happy .michi-pet__button {
-    animation: michi-happy 0.55s ease-in-out;
+    animation: michi-happy 0.65s ease-in-out 2;
 }
 
-/* Michi está descansando */
+.michi-pet.is-happy .michi-pet__image {
+    filter:
+        drop-shadow(0 0 8px rgba(232, 165, 184, 0.65));
+}
+
+@keyframes michi-happy {
+    0%,
+    100% {
+        transform: translateY(0) rotate(0);
+    }
+
+    25% {
+        transform: translateY(-12px) rotate(-7deg);
+    }
+
+    50% {
+        transform: translateY(-5px) rotate(7deg);
+    }
+
+    75% {
+        transform: translateY(-12px) rotate(-5deg);
+    }
+}
+
+/* =========================================
+   ESTADO: DORMIDO
+   ========================================= */
 
 .michi-pet.is-sleeping .michi-pet__button {
-    animation: michi-sleep 4s ease-in-out infinite;
+    animation: michi-sleep 3.5s ease-in-out infinite;
 }
 
-/* Michi está sorprendido */
+.michi-pet.is-sleeping .michi-pet__image {
+    filter: brightness(0.95) drop-shadow(0 4px 6px var(--michi-shadow));
+}
+
+@keyframes michi-sleep {
+    0%,
+    100% {
+        transform: translateY(0) rotate(0);
+    }
+
+    50% {
+        transform: translateY(4px) rotate(2deg);
+    }
+}
+
+/* =========================================
+   ESTADO: SORPRENDIDO
+   ========================================= */
 
 .michi-pet.is-surprised .michi-pet__button {
-    animation: michi-surprise 0.45s ease-in-out;
+    animation: michi-surprised 0.7s ease-in-out;
+}
+
+@keyframes michi-surprised {
+    0% {
+        transform: scale(1);
+    }
+
+    30% {
+        transform: scale(1.15) rotate(-5deg);
+    }
+
+    55% {
+        transform: scale(0.95) rotate(5deg);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* =========================================
+   ESTADO: CURIOSO
+   ========================================= */
+
+.michi-pet.is-curious .michi-pet__button {
+    animation: michi-curious 1s ease-in-out;
+}
+
+@keyframes michi-curious {
+    0%,
+    100% {
+        transform: rotate(0);
+    }
+
+    30% {
+        transform: rotate(-12deg);
+    }
+
+    65% {
+        transform: rotate(10deg);
+    }
+}
+
+/* =========================================
+   ESTADO: TÍMIDO
+   ========================================= */
+
+.michi-pet.is-shy .michi-pet__button {
+    animation: michi-shy 1s ease-in-out;
+}
+
+@keyframes michi-shy {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px) rotate(-4deg);
+    }
+
+    50% {
+        transform: translateX(5px) rotate(4deg);
+    }
+
+    75% {
+        transform: translateX(-3px);
+    }
+}
+
+/* =========================================
+   ESTADO: CELEBRANDO
+   ========================================= */
+
+.michi-pet.is-celebrating .michi-pet__button {
+    animation: michi-celebrating 0.8s ease-in-out infinite;
+}
+
+.michi-pet.is-celebrating .michi-pet__image {
+    filter:
+        drop-shadow(0 0 10px rgba(214, 173, 101, 0.8));
+}
+
+@keyframes michi-celebrating {
+    0%,
+    100% {
+        transform: translateY(0) rotate(0) scale(1);
+    }
+
+    25% {
+        transform: translateY(-12px) rotate(-8deg) scale(1.05);
+    }
+
+    50% {
+        transform: translateY(-5px) rotate(8deg) scale(1.08);
+    }
+
+    75% {
+        transform: translateY(-12px) rotate(-5deg) scale(1.05);
+    }
 }
 
 /* =========================================
    POSICIONES SEGÚN LA SECCIÓN
-   JavaScript cambiará el atributo data-section
-========================================= */
+   ========================================= */
 
 .michi-pet[data-section="inicio"] {
-    right: 28px;
-    bottom: 24px;
+    right: 22px;
+    bottom: 20px;
 }
 
 .michi-pet[data-section="historia"] {
-    right: 35px;
-    bottom: 30px;
-}
-
-.michi-pet[data-section="explora"] {
-    right: 25px;
-    bottom: 22px;
-}
-
-.michi-pet[data-section="gatitos"] {
-    right: 40px;
-    bottom: 35px;
-}
-
-.michi-pet[data-section="carta"] {
-    right: 30px;
+    right: 28px;
     bottom: 25px;
 }
 
+.michi-pet[data-section="explora"] {
+    right: 22px;
+    bottom: 20px;
+}
+
+.michi-pet[data-section="gatitos"] {
+    right: 30px;
+    bottom: 22px;
+}
+
+.michi-pet[data-section="carta"] {
+    right: 25px;
+    bottom: 20px;
+}
+
 .michi-pet[data-section="cumpleanos"] {
-    right: 35px;
-    bottom: 30px;
+    right: 22px;
+    bottom: 25px;
 }
 
 /* =========================================
-   ANIMACIONES
-========================================= */
-
-@keyframes michi-float {
-    0% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-9px);
-    }
-
-    100% {
-        transform: translateY(0);
-    }
-}
-
-@keyframes michi-happy {
-    0% {
-        transform: rotate(0) scale(1);
-    }
-
-    25% {
-        transform: rotate(-10deg) scale(1.08);
-    }
-
-    50% {
-        transform: rotate(10deg) scale(1.12);
-    }
-
-    75% {
-        transform: rotate(-6deg) scale(1.06);
-    }
-
-    100% {
-        transform: rotate(0) scale(1);
-    }
-}
-
-@keyframes michi-sleep {
-    0%, 100% {
-        transform: translateY(0) scale(1);
-    }
-
-    50% {
-        transform: translateY(4px) scale(0.97);
-    }
-}
-
-@keyframes michi-surprise {
-    0%, 100% {
-        transform: translateY(0) scale(1);
-    }
-
-    50% {
-        transform: translateY(-12px) scale(1.1);
-    }
-}
-
-/* =========================================
-   RESPONSIVE - TABLETAS
-========================================= */
+   TABLET
+   ========================================= */
 
 @media (max-width: 900px) {
     .michi-pet {
-        right: 16px;
-        bottom: 18px;
-        width: 115px;
+        right: 15px;
+        bottom: 15px;
+        max-width: 170px;
     }
 
     .michi-pet__button {
@@ -317,19 +393,21 @@
 
     .michi-pet__bubble {
         max-width: 180px;
-        font-size: 0.78rem;
+        padding: 10px 13px;
+        font-size: 0.82rem;
     }
 }
 
 /* =========================================
-   RESPONSIVE - CELULARES
-========================================= */
+   MÓVILES
+   ========================================= */
 
 @media (max-width: 600px) {
     .michi-pet {
         right: 10px;
         bottom: 12px;
-        width: 88px;
+        max-width: 145px;
+        gap: 5px;
     }
 
     .michi-pet__button {
@@ -339,128 +417,30 @@
 
     .michi-pet__bubble {
         max-width: 155px;
-        min-width: 105px;
-
-        padding: 8px 10px;
-
-        font-size: 0.70rem;
+        padding: 9px 11px;
+        border-radius: 14px;
+        font-size: 0.75rem;
     }
 
-    .michi-pet[data-section="inicio"],
-    .michi-pet[data-section="historia"],
-    .michi-pet[data-section="explora"],
-    .michi-pet[data-section="gatitos"],
-    .michi-pet[data-section="carta"],
-    .michi-pet[data-section="cumpleanos"] {
+    .michi-pet[data-section] {
         right: 10px;
         bottom: 12px;
     }
 }
 
 /* =========================================
-   ACCESIBILIDAD
-========================================= */
+   ACCESIBILIDAD: MENOS MOVIMIENTO
+   ========================================= */
 
 @media (prefers-reduced-motion: reduce) {
     .michi-pet,
-    .michi-pet__button,
-    .michi-pet__image,
-    .michi-pet__bubble {
-        animation: none !important;
-        transition: none !important;
-    }
-}
+    .michi-pet *,
+    .michi-pet *::before,
+    .michi-pet *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
 
-/* =========================================
-   PERSONALIDADES Y REACCIONES DE MICHI
-   ========================================= */
-
-/* Curioso: mueve la cabeza suavemente */
-.michi-pet.is-curious .michi-pet__button {
-    animation: michi-curious 1.2s ease-in-out infinite;
-}
-
-/* Tímido: se balancea delicadamente */
-.michi-pet.is-shy .michi-pet__button {
-    animation: michi-shy 2s ease-in-out infinite;
-}
-
-/* Feliz: pequeños saltos */
-.michi-pet.is-happy .michi-pet__button {
-    animation: michi-happy 0.65s ease-in-out;
-}
-
-/* Celebración: salta con entusiasmo */
-.michi-pet.is-celebrating .michi-pet__button {
-    animation: michi-celebrating 0.8s ease-in-out infinite;
-}
-
-/* Curioso */
-@keyframes michi-curious {
-    0%, 100% {
-        transform: rotate(0deg) translateY(0);
-    }
-
-    25% {
-        transform: rotate(-7deg) translateY(-3px);
-    }
-
-    75% {
-        transform: rotate(7deg) translateY(-3px);
-    }
-}
-
-/* Tímido */
-@keyframes michi-shy {
-    0%, 100% {
-        transform: translateX(0) scale(1);
-    }
-
-    50% {
-        transform: translateX(-5px) scale(0.96);
-    }
-}
-
-/* Feliz */
-@keyframes michi-happy {
-    0%, 100% {
-        transform: translateY(0) rotate(0);
-    }
-
-    30% {
-        transform: translateY(-13px) rotate(-8deg);
-    }
-
-    60% {
-        transform: translateY(-5px) rotate(8deg);
-    }
-}
-
-/* Celebración */
-@keyframes michi-celebrating {
-    0%, 100% {
-        transform: translateY(0) rotate(0) scale(1);
-    }
-
-    25% {
-        transform: translateY(-12px) rotate(-8deg) scale(1.06);
-    }
-
-    50% {
-        transform: translateY(0) rotate(0) scale(1);
-    }
-
-    75% {
-        transform: translateY(-12px) rotate(8deg) scale(1.06);
-    }
-}
-
-/* Accesibilidad */
-@media (prefers-reduced-motion: reduce) {
-    .michi-pet.is-curious .michi-pet__button,
-    .michi-pet.is-shy .michi-pet__button,
-    .michi-pet.is-happy .michi-pet__button,
-    .michi-pet.is-celebrating .michi-pet__button {
-        animation: none !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
     }
 }

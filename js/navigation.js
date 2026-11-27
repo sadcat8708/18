@@ -188,6 +188,9 @@ export function initNavigation() {
     // Estado inicial del menú.
     updateMenuState(false);
 
-    // Mostrar sección inicial.
+    // Mostrar sección inicial y sincronizar el estado accesible.
+    // Se reinicia el identificador para que navigateTo actualice
+    // también aria-current en el botón Inicio durante la carga.
+    currentSection = null;
     navigateTo("inicio");
 }

@@ -58,6 +58,13 @@
 
 @media (max-width: 650px) {
 
+    /* BLOQUEAR EL FONDO CUANDO EL MENÚ ESTÁ ABIERTO */
+
+    body.menu-open {
+        overflow: hidden;
+        overscroll-behavior: none;
+    }
+
     /* MENÚ LATERAL */
 
     .sidebar {
